@@ -1,0 +1,17 @@
+public class Dungeon {
+
+    private String name;
+
+    private int totalFloors, currentFloor;
+
+    private char[][] map;
+
+    private List<Creature> team, enemies;
+
+    public Dungeon(String name, int floors) {
+	this.name = name;
+	totalFloors = floors;
+	currentFloor = 1;
+    }
+
+}

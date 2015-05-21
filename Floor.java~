@@ -1,0 +1,28 @@
+public class Floor {
+
+    private char[][] map;
+
+    private List<Creature> enemies;
+
+    public Floor() {
+	map = new char[16][16];
+	makeLayout();
+	makeStairs();
+	makeEnemies();
+	makeTraps();
+    }
+
+    // Void methods for building the floor
+    // makeEnemies() and makeTraps() can be safely left blank
+
+    private void makeLayout() {
+
+    }
+
+    private void makeStairs() {
+
+    }
+
+
+
+}
