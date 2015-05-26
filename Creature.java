@@ -1,7 +1,10 @@
-public class LivingThing {
+public class Creature {
+
   private int health;
+
   private int level;
-  public LivingThing(int health, int level) {
+
+  public Creature(int health, int level) {
     this.health = health;
     this.level = level;
   }

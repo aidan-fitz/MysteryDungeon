@@ -1,7 +1,10 @@
 import java.util.*;
-import static ListUtil.*;
+//import static ListUtil.*;
 
 public class Floor {
+
+    public static final char OPEN = ' ', WALL = 'X', STAIRS = 'S',
+	WATER = 'w', LAVA = 'L', TRAP_UNTRIGGERED = 't', TRAP_TRIGGERED = 'T';
 
   private char[][] map;
 
@@ -20,7 +23,15 @@ public class Floor {
   private char[][] makeBlankGrid() {
     int h = 24 + rng.nextInt(24);
     int w = 48 + rng.nextInt(36);
-    return new char[h][w];
+    char[][] grid = new char[h][w];
+
+    // all walls for printing purposes
+    for (int r = 0; r < map.length; r++) {
+      for (int c = 0; c < map[0].length; c++) {
+          map[r][c] = WALL;
+      }
+    }
+    return grid;
   }
 
   /**
@@ -35,21 +46,13 @@ public class Floor {
     do {
       makeRoom(rooms);
     }
-    while (rng.nextBoolean ());
+    while (rng.nextBoolean());
 
     // then connect them with corridors
     while (!connected (rooms) || rng.nextBoolean()) {
       makeCorridor(rooms);
     }
 
-    // fill the rest with X's
-    for (int r = 0; r < map.length; r++) {
-      for (int c = 0; c < map[0].length; c++) {
-        if (map[r][c] != ' ') {
-          map[r][c] = 'X';
-        }
-      }
-    }
   }
 
   /* Helper functions for makeLayout */
@@ -62,17 +65,31 @@ public class Floor {
     w = rng.nextInt(map[0].length - c1);
     for (int r = 0; r < h; r++) {
       for (int c = 0; c < w; c++) {
-        map[r1+r][c1+c] = ' ';
+        map[r1+r][c1+c] = OPEN;
       }
     }
+    rooms.add(new Room(r1, c1, h, w));
   }
 
   private void makeCorridor(List<Room> rooms) {
-    Room from = oneOf(rooms, rng), to = anotherOf(rooms, from, rng);
+    Room from = ListUtil.oneOf(rooms, rng), to = ListUtil.anotherOf(rooms, from, rng);
+    // do something
+    // fire lasers through random walls, then dig a tunnel when they intersect
   }
 
   private boolean connected(List<Room> rooms) {
     return true;
+  }
+
+  private class Room {
+    public int r1, c1, h, w;
+
+    public Room(int r1, int c1, int h, int w) {
+      this.r1 = r1;
+      this.c1 = c1;
+      this.h = h;
+      this.w = w;
+    }
   }
 
   // end of helper functions for makeLayout
@@ -89,20 +106,43 @@ public class Floor {
   private void makeTraps() {
   }
 
-  private class Room {
-    public int r1, c1, h, w;
+    // end of maze setup functions
 
-    public Room(int r1, int c1, int h, int w) {
-      this.r1 = r1;
-      this.c1 = c1;
-      this.h = h;
-      this.w = w;
+    public Tile get(int row, int col) {
+	return new Tile(row, col);
     }
-  }
 
+    public class Tile {
+	
+	private int row, col;
+
+	public Tile(int row, int col) {
+	    this.row = row;
+	    this.col = col;
+	}
+
+	public char getType() {
+	    return map[row][col];
+	}
+
+	public boolean canWalk() {
+	    return getType() != WALL;
+	}
+    }
 
 
   public static void main(String[] args) {
+      Floor fl = new Floor(null, new Random(201505261159L));
+      System.out.println(fl);
   }
+
+    public String toString() {
+	StringBuilder yolo = new StringBuilder();
+	for (char[] row : map) {
+	    yolo.append(row);
+	    yolo.append('\n');
+	}
+	return yolo.toString();
+    }
 }
 
