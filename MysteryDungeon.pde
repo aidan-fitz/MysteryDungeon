@@ -1,7 +1,6 @@
 void setup() {
-  
 }
 
 void draw() {
-  
 }
+
