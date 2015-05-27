@@ -26,9 +26,9 @@ public class Floor {
     char[][] grid = new char[h][w];
 
     // all walls for printing purposes
-    for (int r = 0; r < map.length; r++) {
-      for (int c = 0; c < map[0].length; c++) {
-          map[r][c] = WALL;
+    for (int r = 0; r < grid.length; r++) {
+      for (int c = 0; c < grid[0].length; c++) {
+          grid[r][c] = WALL;
       }
     }
     return grid;
@@ -72,7 +72,8 @@ public class Floor {
   }
 
   private void makeCorridor(List<Room> rooms) {
-    Room from = ListUtil.oneOf(rooms, rng), to = ListUtil.anotherOf(rooms, from, rng);
+      Room from = (Room) ListUtil.oneOf(rooms, rng),
+	     to = (Room) ListUtil.anotherOf(rooms, from, rng);
     // do something
     // fire lasers through random walls, then dig a tunnel when they intersect
   }
