@@ -16,8 +16,8 @@ public class Dungeon {
     this.name = name;
     totalFloors = floors;
     currentFloor = 1;
-    rng = new Random(team, (name.hashCode() << 16) ^ totalFloors);
-    floor = new Floor(rng);
+    rng = new Random((name.hashCode() << 16) ^ totalFloors);
+    floor = new Floor(team, rng);
   }
 
   public void nextFloor() {
@@ -25,7 +25,7 @@ public class Dungeon {
     if (currentFloor > totalFloors) {
       // exit the dungeon
     } else {
-      floor = new Floor();
+	floor = new Floor(team, rng);
     }
   }
 }
