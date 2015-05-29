@@ -13,25 +13,12 @@ public class Floor implements Iterable<Floor.Tile> {
 
   public Floor(List<Creature> team, Random rng) {
     this.rng = rng;
-    map = makeBlankGrid();
+    map = new char[36][48];
+    makeLayout();
   }
 
   // Void methods for building the floor
   // makeEnemies() and makeTraps() can be safely left blank
-
-  private char[][] makeBlankGrid() {
-    int h = 36;
-    int w = 48;
-    char[][] grid = new char[h][w];
-
-    // all walls for printing purposes
-    for (int r = 0; r < sizeY (); r++) {
-      for (int c = 0; c < sizeX (); c++) {
-        grid[r][c] = WALL;
-      }
-    }
-    return grid;
-  }
 
   public int sizeX() {
     return map[0].length;
@@ -59,6 +46,13 @@ public class Floor implements Iterable<Floor.Tile> {
     //    while (!connected (rooms) || rng.nextBoolean()) {
     //      makeCorridor(rooms);
     //    }
+
+    for (int r = 0; r < sizeY (); r++) {
+      for (int c = 0; c < sizeX (); c++) {
+        if (map[r][c] == '\0')
+          map[r][c] = WALL;
+      }
+    }
   }
 
   /* Helper functions for makeLayout */
@@ -140,19 +134,19 @@ public class Floor implements Iterable<Floor.Tile> {
       switch (getType()) {
       case OPEN: 
       case TRAP_UNTRIGGERED:
-        return #ccff99;
+        return #ccff99; // light yellow
       case WALL:
-        return #006600;
+        return #006600; // dark green
       case STAIRS:
-        return #999999;
+        return #999999; // gray
       case WATER:
-        return #00a0ff;
+        return #00a0ff; // blue
       case LAVA:
-        return #ff6900;
+        return #ff6900; // red-orange
       case TRAP_TRIGGERED:
-        return #cc0000;
+        return #cc0000; // deep red
       default:
-        return #000000;
+        return #000000; // black
       }
     }
 
@@ -166,17 +160,19 @@ public class Floor implements Iterable<Floor.Tile> {
 
   public Iterator<Tile> iterator() {
     return new Iterator<Tile>() {
-      private int x, y;
+      private int x = 0, y = 0;
 
       public Tile next() {
+        // Check this at the beginning
+        if (y >= sizeY()) {
+          throw new IndexOutOfBoundsException();
+        }
+
         int cx = x, cy = y;
         x++;
         if (x >= sizeX()) {
           y++;
           x = 0;
-        }
-        if (y >= sizeY()) {
-          throw new IndexOutOfBoundsException();
         }
         return new Tile(cx, cy);
       }

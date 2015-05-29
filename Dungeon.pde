@@ -30,7 +30,9 @@ public class Dungeon {
   }
   
   public void draw() {
-    
+    for (Floor.Tile tile: floor) {
+      tile.draw();
+    }
   }
 }
 
