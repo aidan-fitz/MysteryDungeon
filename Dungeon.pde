@@ -28,5 +28,9 @@ public class Dungeon {
 	floor = new Floor(team, rng);
     }
   }
+  
+  public void draw() {
+    
+  }
 }
 
