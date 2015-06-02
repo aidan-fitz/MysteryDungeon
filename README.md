@@ -32,6 +32,9 @@ Monster house
 
 Inspired by: http://bulbapedia.bulbagarden.net/wiki/Mystery_Dungeon_game_mechanics
 
+**Playable Versions**
+**Week 1:** commit cc731e448f47bc00167962351ee919d12f104a05
+
 Log:
 - **2015-05-26** Removed references to partners in the description.  We are no longer planning to implement this feature because we already have enough work as it is.
 - **2015-05-27** Aidan fixed bugs in `Floor.java`. Running it in a terminal prints a blank map (just wall tiles).
