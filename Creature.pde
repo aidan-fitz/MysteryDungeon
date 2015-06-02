@@ -23,8 +23,6 @@ public class Creature {
   public void setLevel(int level) {
     this.level = level;
   }
-  public void attack(Creature other){
-  }
   public void moveH(int distance){ //negative is left
     r = r + distance;
   }

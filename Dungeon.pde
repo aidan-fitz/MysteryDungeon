@@ -14,7 +14,9 @@ public class Dungeon {
   private Random rng;
 
   public Dungeon(String name, int floors) {
-    
+    enemies = new ArrayList<Creature>();
+    Creature enemy = new Creature(20,10,10,10, color(0,255,0));
+    enemies.add(enemy);
     this.name = name;
     totalFloors = floors;
     currentFloor = 1;
@@ -52,6 +54,11 @@ public class Dungeon {
       tile.draw();
     }
     hero.draw();
+    int i = 0;
+    while (i < enemies.size()){
+      enemies.get(i).draw();
+      i = i + 1;
+    }
   }
 }
 
