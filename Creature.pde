@@ -40,7 +40,7 @@ public class Creature {
   }
   public void draw(){
     stroke(0);
-    fill(255,0,0);
+    fill(creatureColor);
     ellipseMode(CORNER);
     ellipse(r * 20, c * 20, 20, 20);
   }

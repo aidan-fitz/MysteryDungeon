@@ -101,9 +101,6 @@ public class Floor implements Iterable<Floor.Tile> {
   private void placeTeam() {
   }
 
-  private void makeEnemies() {
-  }
-
   private void makeTraps() {
   }
 

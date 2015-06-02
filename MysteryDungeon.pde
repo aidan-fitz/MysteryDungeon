@@ -11,8 +11,12 @@ void setup() {
 
 void draw() {
   background(255);
-  dungeon.getHero().processKeys(isUp, isDown, isRight, isLeft);
+  dungeon.getHero().processKeys(isUp, isDown, isRight, isLeft, isSpace);
   dungeon.draw();
+  if (dungeon.getHero().getAttemptAttacking()){
+      dungeon.attack();
+  }
+  dungeon.getHero().setAttemptAttacking(false);
 }
 
 void handleKey(boolean pressed){
