@@ -35,3 +35,5 @@ Inspired by: http://bulbapedia.bulbagarden.net/wiki/Mystery_Dungeon_game_mechani
 Log:
 - **2015-05-26** Removed references to parteners in the decription.  We are no longer planning to implement this feature because we already have enough work as it is.
 - **2015-05-27** Aidan fixed bugs in `Floor.java`. Running it in a terminal prints a blank map (just wall tiles).
+- **2015-05-29** Aidan converted the repo to work in Processing.
+- **2015-06-02** Aidan fixed the `makeRoom` method and plugged it into `makeLayout`

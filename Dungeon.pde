@@ -16,7 +16,7 @@ public class Dungeon {
     this.name = name;
     totalFloors = floors;
     currentFloor = 1;
-    rng = new Random((name.hashCode() << 16) ^ totalFloors);
+    rng = new Random();
     floor = new Floor(team, rng);
   }
 

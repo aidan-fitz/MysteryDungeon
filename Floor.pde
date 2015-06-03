@@ -37,10 +37,11 @@ public class Floor implements Iterable<Floor.Tile> {
     List<Room> rooms = new LinkedList<Room>();
     // keep making rooms until I get tired of it
     // always make at least one room
-    do {
+    //    do {
+    for (int i = 0; i < 3; i++) {
       makeRoom(rooms);
     }
-    while (rng.nextBoolean ());
+    //    while (rng.nextBoolean ());
 
     // then connect them with corridors
     //    while (!connected (rooms) || rng.nextBoolean()) {
@@ -59,16 +60,32 @@ public class Floor implements Iterable<Floor.Tile> {
 
   private void makeRoom(List<Room> rooms) {
     // TODO make sure rooms don't overlap
-    int y1 = rng.nextInt(sizeY()), 
-    x1 = rng.nextInt(sizeX()), 
-    sy = rng.nextInt(sizeY() - y1), 
-    sx = rng.nextInt(sizeX() - x1);
-    for (int y = 0; y < sy; y++) {
-      for (int x = 0; x < sx; x++) {
-        map[y1+y][x1+x] = OPEN;
+    int x1 = rng.nextInt(sizeX()), 
+    y1 = rng.nextInt(sizeY()), 
+    x2 = x1 + rng.nextInt(sizeX() - x1), 
+    y2 = y1 + rng.nextInt(sizeY() - y1);
+
+    Room newRoom = new Room(x1, x2, y1, y2);
+
+    if (canMakeRoomHere(rooms, newRoom)) {
+      // Then go ahead
+      for (int x = x1; x < x2; x++) {
+        for (int y = y1; y < y2; y++) {
+          map[y][x] = OPEN;
+        }
       }
+      rooms.add(newRoom);
+    } else {
+      makeRoom(rooms);
     }
-    rooms.add(new Room(y1, x1, sy, sx));
+  }
+
+  private boolean canMakeRoomHere(List<Room> rooms, Room newRoom) {
+    for (Room oldRoom : rooms) {
+      if (newRoom.overlaps(oldRoom))
+        return false;
+    }
+    return true;
   }
 
   private void makeCorridor(List<Room> rooms) {
@@ -83,13 +100,19 @@ public class Floor implements Iterable<Floor.Tile> {
   }
 
   private class Room {
-    public int r1, c1, h, w;
+    public int x1, y1, x2, y2;
 
-    public Room(int r1, int c1, int h, int w) {
-      this.r1 = r1;
-      this.c1 = c1;
-      this.h = h;
-      this.w = w;
+    public Room(int x1, int y1, int x2, int y2) {
+      this.x1 = x1;
+      this.y1 = y1;
+      this.x2 = x2;
+      this.y2 = y2;
+    }
+
+    // h/t http://www.geeksforgeeks.org/find-two-rectangles-overlap/
+    public boolean overlaps(Room other) {
+      return (x1 <= other.x2 && x2 <= other.x1)
+        && (y1 <= other.y2 && y2 <= other.y1);
     }
   }
 
@@ -132,6 +155,7 @@ public class Floor implements Iterable<Floor.Tile> {
 
     public color getColor() {
       switch (getType()) {
+        // Untriggered traps and open tiles look identical
       case OPEN: 
       case TRAP_UNTRIGGERED:
         return #ccff99; // light yellow
