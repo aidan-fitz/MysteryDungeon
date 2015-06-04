@@ -124,9 +124,6 @@ public class Floor implements Iterable<Floor.Tile> {
   private void placeTeam() {
   }
 
-  private void makeEnemies() {
-  }
-
   private void makeTraps() {
   }
 
@@ -176,7 +173,8 @@ public class Floor implements Iterable<Floor.Tile> {
 
     public void draw() {
       rectMode(CORNER);
-      noStroke();
+      //noStroke();
+      stroke(0);
       fill(getColor());
       rect(20*x, 20*y, 20, 20);
     }

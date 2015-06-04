@@ -32,8 +32,17 @@ Monster house
 
 Inspired by: http://bulbapedia.bulbagarden.net/wiki/Mystery_Dungeon_game_mechanics
 
+**Playable Versions**
+**Week 1:** commit cc731e448f47bc00167962351ee919d12f104a05
+
 Log:
 - **2015-05-26** Removed references to parteners in the decription.  We are no longer planning to implement this feature because we already have enough work as it is.
 - **2015-05-27** Aidan fixed bugs in `Floor.java`. Running it in a terminal prints a blank map (just wall tiles).
 - **2015-05-29** Aidan converted the repo to work in Processing.
 - **2015-06-02** Aidan fixed the `makeRoom` method and plugged it into `makeLayout`
+- **2015-05-26** Removed references to partners in the description.  We are no longer planning to implement this feature because we already have enough work as it is.
+- **2015-05-27** Aidan fixed bugs in `Floor.java`. Running it in a terminal prints a blank map (just wall tiles).
+- **2015-05-29** Aidan merged code from his branch.  The dungeon now generates in processing.
+- **2015-05-31** Ethan merged code from his branch.  Player movement now works and responsibilities for each class have now been assigned.  the MysteryDungeon class is the driver and stores the booleans for player movement as well as handles keyboard input.  Creatures draw themselves.  Dungeon is responsible for attacks.  The dungeon will check to see if the enemy is in range of the player.  The tile class draws itself.  Hero extends creature and has processes hero movement.
+- **2015-06-2** Ethan added attack.  Hero can now attack any enemy within a one tile range.
+
