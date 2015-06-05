@@ -34,66 +34,17 @@ public class Floor implements Iterable<Floor.Tile> {
    * connected by one-tile-wide corridors.
    */
   private void makeLayout() {
-    List<Room> rooms = new LinkedList<Room>();
-    // keep making rooms until I get tired of it
-    // always make at least one room
-    do {
-      makeRoom(rooms);
-    }
-    while (rng.nextBoolean ());
+    File dir = new File(".");
+    File[] files = dir.listFiles(new FilenameFilter() {
+    	   @Override
+	   public boolean accept(File dir, String name) {
+	   	  return name.endsWith(".map");
+		  }
+		  });
+    File mapLayout = oneOf(Arrays.asList(files), rng);
 
-    // then connect them with corridors
-    //    while (!connected (rooms) || rng.nextBoolean()) {
-    //      makeCorridor(rooms);
-    //    }
-
-    for (int r = 0; r < sizeY (); r++) {
-      for (int c = 0; c < sizeX (); c++) {
-        if (map[r][c] == '\0')
-          map[r][c] = WALL;
-      }
-    }
+    // Load contents of mapLayout into char[][] map, line by line
   }
-
-  /* Helper functions for makeLayout */
-
-  private void makeRoom(List<Room> rooms) {
-    // TODO make sure rooms don't overlap
-    int y1 = rng.nextInt(sizeY()), 
-    x1 = rng.nextInt(sizeX()), 
-    sy = rng.nextInt(sizeY() - y1), 
-    sx = rng.nextInt(sizeX() - x1);
-    for (int y = 0; y < sy; y++) {
-      for (int x = 0; x < sx; x++) {
-        map[y1+y][x1+x] = OPEN;
-      }
-    }
-    rooms.add(new Room(y1, x1, sy, sx));
-  }
-
-  private void makeCorridor(List<Room> rooms) {
-    Room from = (Room) oneOf(rooms, rng), 
-    to = (Room) anotherOf(rooms, from, rng);
-    // do something
-    // fire lasers through random walls, then dig a tunnel when they intersect
-  }
-
-  private boolean connected(List<Room> rooms) {
-    return true;
-  }
-
-  private class Room {
-    public int r1, c1, h, w;
-
-    public Room(int r1, int c1, int h, int w) {
-      this.r1 = r1;
-      this.c1 = c1;
-      this.h = h;
-      this.w = w;
-    }
-  }
-
-  // end of helper functions for makeLayout
 
   private void makeStairs() {
   }
