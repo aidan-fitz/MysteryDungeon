@@ -46,3 +46,5 @@ Log:
 - **2015-05-31** Ethan merged code from his branch.  Player movement now works and responsibilities for each class have now been assigned.  the MysteryDungeon class is the driver and stores the booleans for player movement as well as handles keyboard input.  Creatures draw themselves.  Dungeon is responsible for attacks.  The dungeon will check to see if the enemy is in range of the player.  The tile class draws itself.  Hero extends creature and has processes hero movement.
 - **2015-06-2** Ethan added attack.  Hero can now attack any enemy within a one tile range.
 - **2015-06-3** Ethan merged Aidan's fix for the room generation.
+- **2015-06-4** Ethan added code so that the hero doesn't go through walls.  It didn't work because the coordinates were messed up (the hero was shifted over by one) so he will continue to work on that in class tomorrow.
+- **2015-06-5** Ethan changed the hero to work with x,y instead of r,c. 
