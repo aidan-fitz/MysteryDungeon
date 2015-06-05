@@ -34,6 +34,7 @@ public class Floor implements Iterable<Floor.Tile> {
    * connected by one-tile-wide corridors.
    */
   private void makeLayout() {
+// http://stackoverflow.com/a/2102989
     File dir = new File(".");
     File[] files = dir.listFiles(new FilenameFilter() {
     	   @Override
