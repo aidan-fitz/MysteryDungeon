@@ -37,13 +37,12 @@ public class Dungeon {
      return hero;
   }
   public void attack(){
-      System.out.println("a");
+    System.out.println(hero.getX() + " " + hero.getY());
     Creature enemy = null;
     int i = 0;
     while (i < enemies.size()){
         Creature currEnemy = enemies.get(i);
-      if (dist(currEnemy.getR(), currEnemy.getC(), hero.getR(), hero.getC()) <= 1){
-           System.out.println("b");
+      if (dist(currEnemy.getX(), currEnemy.getY(), hero.getX(), hero.getY()) <= 1){
            enemy = currEnemy;
            enemy.setColor(color(100,100,100));
          

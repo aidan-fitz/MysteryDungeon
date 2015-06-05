@@ -1,8 +1,8 @@
     public class Hero extends Creature{
         long nextMovement;
         boolean attemptAttacking;
-        public Hero(int health, int level, int r, int c, color creatureColor){
-            super(health, level, r, c, creatureColor);
+        public Hero(int health, int level, int x, int y, color creatureColor){
+            super(health, level, x, y, creatureColor);
             nextMovement = millis() + 120;
             attemptAttacking = false;
         }

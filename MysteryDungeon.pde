@@ -4,7 +4,7 @@ Dungeon dungeon;
 boolean isUp, isDown, isRight, isLeft, isSpace;
 
 void setup() {
-  size(800, 600);
+  size(960, 720);
   dungeon = new Dungeon("Nano Woods", 1);
   
 }
