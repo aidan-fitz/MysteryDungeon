@@ -34,5 +34,13 @@ public class Dungeon {
       tile.draw();
     }
   }
+  
+  public int sizeX() {
+    return floor.sizeX();
+  }
+  
+  public int sizeY() {
+    return floor.sizeY();
+  }
 }
 

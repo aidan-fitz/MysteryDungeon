@@ -15,6 +15,8 @@ public class Floor implements Iterable<Floor.Tile> {
   public Floor(List<Creature> team, Random rng) {
     this.rng = rng;
     map = loadLayout();
+    
+    println(sizeX() + "," + sizeY());
   }
 
   /**
@@ -135,7 +137,7 @@ public class Floor implements Iterable<Floor.Tile> {
       rectMode(CORNER);
       noStroke();
       fill(getColor());
-      rect(20*x, 20*y, 20, 20);
+      rect(tileSize*x, tileSize*y, tileSize, tileSize);
     }
   }
 

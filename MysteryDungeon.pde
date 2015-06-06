@@ -2,9 +2,11 @@ import java.util.*;
 
 Dungeon dungeon;
 
+int tileSize = 20;
+
 void setup() {
-  size(800, 600);
   dungeon = new Dungeon("Nano Woods", 1);
+  size(tileSize*dungeon.sizeX(), tileSize*dungeon.sizeY());
 }
 
 void draw() {
