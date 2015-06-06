@@ -14,15 +14,15 @@ public class Dungeon {
   private Random rng;
 
   public Dungeon(String name, int floors) {
-    enemies = new ArrayList<Creature>();
-    Creature enemy = new Creature(20,10,10,10, color(0,255,0));
-    enemies.add(enemy);
     this.name = name;
     totalFloors = floors;
     currentFloor = 1;
     rng = new Random();
     floor = new Floor(enemies, rng);
-    hero = new Hero(20, 1, 20, 20, color(255,0,0));
+    enemies = new ArrayList<Creature>();
+    Creature enemy = new Creature(20,10,10,10, color(0,255,0), this);
+    enemies.add(enemy);
+    hero = new Hero(20, 1, 20, 20, color(255,0,0), this);
   }
 
   public void nextFloor() {
@@ -36,6 +36,10 @@ public class Dungeon {
   public Hero getHero(){
      return hero;
   }
+  public Floor getFloor(){
+      return floor;
+  }
+  
   public void attack(){
     System.out.println(hero.getX() + " " + hero.getY());
     Creature enemy = null;

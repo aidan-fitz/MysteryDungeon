@@ -28,6 +28,9 @@ public class Floor implements Iterable<Floor.Tile> {
     return map.length;
   }
 
+   public Tile getTile(int x, int y){
+      return new Tile(x, y);
+    }
   /**
    * Determines placement of wall (X) and floor tiles (SPACE).
    * Floor tiles are arranged in rectangular, non-overlapping rooms
@@ -128,10 +131,6 @@ public class Floor implements Iterable<Floor.Tile> {
   }
 
   // end of maze setup functions
-
-    public Tile get(int row, int col) {
-    return new Tile(row, col);
-  }
 
   public class Tile {
 

@@ -1,8 +1,8 @@
     public class Hero extends Creature{
         long nextMovement;
         boolean attemptAttacking;
-        public Hero(int health, int level, int x, int y, color creatureColor){
-            super(health, level, x, y, creatureColor);
+        public Hero(int health, int level, int x, int y, color creatureColor, Dungeon dungeon){
+            super(health, level, x, y, creatureColor, dungeon);
             nextMovement = millis() + 120;
             attemptAttacking = false;
         }
@@ -11,16 +11,24 @@
           if (millis() >= nextMovement){
             nextMovement = millis() + 120;
             if (isUp) {
-            moveV(-1);
+              if(dungeon.getFloor().getTile(getX() - 1, getY()).canWalk()){
+              moveV(-1);
+              }
           }
           if (isDown) {
+              if(dungeon.getFloor().getTile(getX() + 1, getY()).canWalk()){
             moveV(1);
+              }
           }
           if (isLeft) {
+            if(dungeon.getFloor().getTile(getX(), getY() - 1).canWalk()){
             moveH(-1);
+            }
           }
           if (isRight) {
+            if(dungeon.getFloor().getTile(getX(), getY() + 1).canWalk()){
             moveH(1);
+            }
           }
           if (isSpace){
             attemptAttacking = true;

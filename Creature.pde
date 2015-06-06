@@ -1,15 +1,16 @@
 public class Creature {
-  
+  private Dungeon dungeon;
   private int health;
   private int x,y; //position in the floor map
   private int level;
   private color creatureColor;
-  public Creature(int health, int level, int x, int y, color creatureColor) {
+  public Creature(int health, int level, int x, int y, color creatureColor, Dungeon dungeon) {
     this.x = x;
     this.y = y;
     this.health = health;
     this.level = level;
     this.creatureColor = creatureColor;
+    this.dungeon = dungeon;
   }
   public int getHealth() {
     return health;
