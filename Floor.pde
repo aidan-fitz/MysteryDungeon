@@ -1,4 +1,5 @@
 import java.util.*;
+import java.io.*;
 
 public class Floor implements Iterable<Floor.Tile> {
 
@@ -13,12 +14,56 @@ public class Floor implements Iterable<Floor.Tile> {
 
   public Floor(List<Creature> team, Random rng) {
     this.rng = rng;
-    map = new char[36][48];
-    makeLayout();
+    map = loadLayout();
   }
 
-  // Void methods for building the floor
-  // makeEnemies() and makeTraps() can be safely left blank
+  /**
+   * Determines placement of wall (X) and floor tiles (SPACE).
+   * Floor tiles are arranged in rectangular, non-overlapping rooms
+   * connected by one-tile-wide corridors.
+   */
+  private char[][] loadLayout() {
+    File mapLayout;
+
+    try {
+      mapLayout = (File) oneOf(mapFiles(), rng);
+    } 
+    catch (IOException e) {
+      e.printStackTrace();
+      mapLayout = null;
+    }
+
+    // Load contents of mapLayout into char[][] map, line by line
+    List<char[]> lines = new ArrayList<char[]>(36);
+    Scanner sc;
+    try {
+      sc = new Scanner(mapLayout);
+    } 
+    catch (FileNotFoundException e) {
+      // shouldn't happen
+      e.printStackTrace();
+      sc = null;
+    }
+    while (sc.hasNext ()) {
+      lines.add(sc.nextLine().toCharArray());
+    }
+    return lines.toArray(new char[lines.size()][]);
+  }
+
+  // oneOf requires a list
+  private final List<File> mapFiles() throws IOException {
+    // http://stackoverflow.com/a/2102989
+    File dir = new File(dataPath(""));
+    println(dir.getCanonicalPath());
+    File[] mapFileArray = dir.listFiles(new FilenameFilter() {
+      @Override
+        public boolean accept(File dir, String name) {
+        return name.endsWith(".map");
+      }
+    }
+    );
+    return Arrays.asList(mapFileArray);
+  }
 
   public int sizeX() {
     return map[0].length;
@@ -28,24 +73,8 @@ public class Floor implements Iterable<Floor.Tile> {
     return map.length;
   }
 
-  /**
-   * Determines placement of wall (X) and floor tiles (SPACE).
-   * Floor tiles are arranged in rectangular, non-overlapping rooms
-   * connected by one-tile-wide corridors.
-   */
-  private void makeLayout() {
-// http://stackoverflow.com/a/2102989
-    File dir = new File(".");
-    File[] files = dir.listFiles(new FilenameFilter() {
-    	   @Override
-	   public boolean accept(File dir, String name) {
-	   	  return name.endsWith(".map");
-		  }
-		  });
-    File mapLayout = oneOf(Arrays.asList(files), rng);
-
-    // Load contents of mapLayout into char[][] map, line by line
-  }
+  // Void methods for building the floor
+  // makeEnemies() and makeTraps() can be safely left blank
 
   private void makeStairs() {
   }

@@ -25,12 +25,12 @@ public class Dungeon {
     if (currentFloor > totalFloors) {
       // exit the dungeon
     } else {
-	floor = new Floor(team, rng);
+      floor = new Floor(team, rng);
     }
   }
-  
+
   public void draw() {
-    for (Floor.Tile tile: floor) {
+    for (Floor.Tile tile : floor) {
       tile.draw();
     }
   }
