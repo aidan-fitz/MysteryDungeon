@@ -3,10 +3,13 @@ import java.util.*;
 Dungeon dungeon;
 boolean isUp, isDown, isRight, isLeft, isSpace;
 
+int tileSize = 20;
+
 void setup() {
   size(960, 720);
   dungeon = new Dungeon("Nano Woods", 1);
-  
+  size(tileSize*dungeon.sizeX(), tileSize*dungeon.sizeY());
+
 }
 
 void draw() {

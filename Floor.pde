@@ -1,4 +1,5 @@
 import java.util.*;
+import java.io.*;
 
 public class Floor implements Iterable<Floor.Tile> {
 
@@ -13,19 +14,9 @@ public class Floor implements Iterable<Floor.Tile> {
 
   public Floor(List<Creature> team, Random rng) {
     this.rng = rng;
-    map = new char[36][48];
-    makeLayout();
-  }
-
-  // Void methods for building the floor
-  // makeEnemies() and makeTraps() can be safely left blank
-
-  public int sizeX() {
-    return map[0].length;
-  }
-
-  public int sizeY() {
-    return map.length;
+    map = loadLayout();
+    
+    println(sizeX() + "," + sizeY());
   }
 
    public Tile getTile(int x, int y){
@@ -36,6 +27,7 @@ public class Floor implements Iterable<Floor.Tile> {
    * Floor tiles are arranged in rectangular, non-overlapping rooms
    * connected by one-tile-wide corridors.
    */
+<<<<<<< HEAD
   private void makeLayout() {
     List<Room> rooms = new LinkedList<Room>();
     // keep making rooms until I get tired of it
@@ -50,15 +42,35 @@ public class Floor implements Iterable<Floor.Tile> {
     //    while (!connected (rooms) || rng.nextBoolean()) {
     //      makeCorridor(rooms);
     //    }
+  private char[][] loadLayout() {
+    File mapLayout;
 
-    for (int r = 0; r < sizeY (); r++) {
-      for (int c = 0; c < sizeX (); c++) {
-        if (map[r][c] == '\0')
-          map[r][c] = WALL;
-      }
+    try {
+      mapLayout = (File) oneOf(mapFiles(), rng);
+    } 
+    catch (IOException e) {
+      e.printStackTrace();
+      mapLayout = null;
     }
+
+    // Load contents of mapLayout into char[][] map, line by line
+    List<char[]> lines = new ArrayList<char[]>(36);
+    Scanner sc;
+    try {
+      sc = new Scanner(mapLayout);
+    } 
+    catch (FileNotFoundException e) {
+      // shouldn't happen
+      e.printStackTrace();
+      sc = null;
+    }
+    while (sc.hasNext ()) {
+      lines.add(sc.nextLine().toCharArray());
+    }
+    return lines.toArray(new char[lines.size()][]);
   }
 
+<<<<<<< HEAD
   /* Helper functions for makeLayout */
 
   private void makeRoom(List<Room> rooms) {
@@ -76,11 +88,23 @@ public class Floor implements Iterable<Floor.Tile> {
         for (int y = y1; y < y2; y++) {
           map[y][x] = OPEN;
         }
+=======
+  // oneOf requires a list
+  private final List<File> mapFiles() throws IOException {
+    // http://stackoverflow.com/a/2102989
+    File dir = new File(dataPath(""));
+    println(dir.getCanonicalPath());
+    File[] mapFileArray = dir.listFiles(new FilenameFilter() {
+      @Override
+        public boolean accept(File dir, String name) {
+        return name.endsWith(".map");
+>>>>>>> golduck2
       }
       rooms.add(newRoom);
     } else {
       makeRoom(rooms);
     }
+<<<<<<< HEAD
   }
 
   private boolean canMakeRoomHere(List<Room> rooms, Room newRoom) {
@@ -96,12 +120,17 @@ public class Floor implements Iterable<Floor.Tile> {
     to = (Room) anotherOf(rooms, from, rng);
     // do something
     // fire lasers through random walls, then dig a tunnel when they intersect
+=======
+    );
+    return Arrays.asList(mapFileArray);
+>>>>>>> golduck2
   }
 
-  private boolean connected(List<Room> rooms) {
-    return true;
+  public int sizeX() {
+    return map[0].length;
   }
 
+<<<<<<< HEAD
   private class Room {
     public int x1, y1, x2, y2;
 
@@ -117,9 +146,14 @@ public class Floor implements Iterable<Floor.Tile> {
       return (x1 <= other.x2 && x2 <= other.x1)
         && (y1 <= other.y2 && y2 <= other.y1);
     }
+=======
+  public int sizeY() {
+    return map.length;
+>>>>>>> golduck2
   }
 
-  // end of helper functions for makeLayout
+  // Void methods for building the floor
+  // makeEnemies() and makeTraps() can be safely left blank
 
   private void makeStairs() {
   }
@@ -175,7 +209,7 @@ public class Floor implements Iterable<Floor.Tile> {
       //noStroke();
       stroke(0);
       fill(getColor());
-      rect(20*x, 20*y, 20, 20);
+      rect(tileSize*x, tileSize*y, tileSize, tileSize);
     }
   }
 

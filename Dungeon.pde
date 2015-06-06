@@ -54,9 +54,9 @@ public class Dungeon {
       i = i + 1;
     }
   }
-  
+
   public void draw() {
-    for (Floor.Tile tile: floor) {
+    for (Floor.Tile tile : floor) {
       tile.draw();
     }
     hero.draw();
@@ -65,6 +65,14 @@ public class Dungeon {
       enemies.get(i).draw();
       i = i + 1;
     }
+  }
+  
+  public int sizeX() {
+    return floor.sizeX();
+  }
+  
+  public int sizeY() {
+    return floor.sizeY();
   }
 }
 
