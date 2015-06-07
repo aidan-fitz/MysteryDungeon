@@ -12,12 +12,13 @@ public class Floor implements Iterable<Floor.Tile> {
 
   private Random rng;
 
-  PImage wallImage; 
+  PImage wallImage, groundImage; 
   
   public Floor(List<Creature> team, Random rng) {
     this.rng = rng;
     map = loadLayout();
     wallImage = loadImage("wall.png");
+    groundImage = loadImage("ground.png");
     println(sizeX() + "," + sizeY());
   }
 
@@ -143,19 +144,23 @@ public class Floor implements Iterable<Floor.Tile> {
       }
     }
     public void draw() {
-      /* noStroke();
-      imageMode(CORNER);
-      image(wallImage, x * 20, y * 20, 20, 20);
-      */
-      
-      rectMode(CORNER);
       noStroke();
+      if (getType() == OPEN){
+        imageMode(CORNER);
+        image(groundImage, x * 20, y * 20, 20, 20);
+      }else{
+      if (getType() == WALL){
+        imageMode(CORNER);
+        image(wallImage, x * 20, y * 20, 20, 20);
+      }
+      else{
+      rectMode(CORNER);
       fill(getColor());
       rect(tileSize*x, tileSize*y, tileSize, tileSize);
-    
+      }
+    }
     }
   }
-
   public Iterator<Tile> iterator() {
     return new Iterator<Tile>() {
       private int x = 0, y = 0;

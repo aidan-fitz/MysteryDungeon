@@ -20,9 +20,9 @@ public class Dungeon {
     rng = new Random();
     floor = new Floor(enemies, rng);
     enemies = new ArrayList<Creature>();
-    Creature enemy = new Creature(20,10,10,10, color(0,255,0), this);
+    Creature enemy = new Creature(20,10,10,10, color(0,255,0), this, true);
     enemies.add(enemy);
-    hero = new Hero(20, 1, 20, 15, color(255,0,0), this);
+    hero = new Hero(20, 1, 20, 15, color(255,0,0), this, false);
   }
 
   public void nextFloor() {

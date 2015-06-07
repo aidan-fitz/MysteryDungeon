@@ -4,13 +4,18 @@ public class Creature {
   private int r,c; //position in the floor map
   private int level;
   private color creatureColor;
-  public Creature(int health, int level, int r, int c, color creatureColor, Dungeon dungeon) {
+  private boolean enemy;
+  PImage enemyImage, heroImage; 
+  public Creature(int health, int level, int r, int c, color creatureColor, Dungeon dungeon, boolean enemy) {
     this.r = r;
     this.c = c;
     this.health = health;
     this.level = level;
     this.creatureColor = creatureColor;
     this.dungeon = dungeon;
+    this.enemy = enemy;
+    enemyImage = loadImage("enemy.png");
+    heroImage = loadImage("hero.png");
   }
   public int getHealth() {
     return health;
@@ -40,10 +45,12 @@ public class Creature {
     this.creatureColor = creatureColor;
   }
   public void draw(){
-    stroke(0);
-    fill(creatureColor);
-    ellipseMode(CORNER);
-    ellipse(c * 20, r * 20, 20, 20);
+      imageMode(CORNER);
+    if (enemy){
+      image(enemyImage, c * 20, r * 20, 20, 20);
+    }else{
+      image(heroImage, c * 20, r * 20, 20, 20);
+    }
   }
 }
 
