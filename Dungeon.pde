@@ -13,16 +13,22 @@ public class Dungeon {
   
   private Random rng;
 
+  private FightScreen fightScreen;
+  
+  private boolean attacking;
+  
   public Dungeon(String name, int floors) {
+    fightScreen = new FightScreen(this);
     this.name = name;
     totalFloors = floors;
     currentFloor = 1;
     rng = new Random();
     floor = new Floor(enemies, rng);
     enemies = new ArrayList<Creature>();
-    Creature enemy = new Creature(20,10,10,10, color(0,255,0), this, true);
+    Creature enemy = new Creature(20,10,27, color(0,255,0), this, true);
     enemies.add(enemy);
-    hero = new Hero(20, 1, 20, 15, color(255,0,0), this, false);
+    hero = new Hero(20, 32, 10, color(255,0,0), this, false);
+    attacking = false;
   }
 
   public void nextFloor() {
@@ -39,23 +45,27 @@ public class Dungeon {
   public Floor getFloor(){
       return floor;
   }
+  public boolean getAttacking(){
+      return attacking;
+  }
+  public void setAttacking(boolean attacking){
+    this.attacking = attacking;
+  }
   
   public void attack(){
-    Creature enemy = null;
     int i = 0;
     while (i < enemies.size()){
         Creature currEnemy = enemies.get(i);
         System.out.println(dist(currEnemy.getR(), currEnemy.getC(), hero.getR(), hero.getC()));
-      if (dist(currEnemy.getR(), currEnemy.getC(), hero.getR(), hero.getC()) <= 2){
-           enemy = currEnemy;
-           enemy.setColor(color(100,100,100));
-         
+      if (dist(currEnemy.getR(), currEnemy.getC(), hero.getR(), hero.getC()) < 2){
+           attacking = true;
       }
       i = i + 1;
     }
   }
 
   public void draw() {
+    if (!attacking){
     for (Floor.Tile tile : floor) {
        if ( 0 <= tile.getX() && tile.getX() < floor.sizeX() && 0 <= tile.getY() && tile.getY() < floor.sizeY()){
         tile.draw();
@@ -67,6 +77,9 @@ public class Dungeon {
       enemies.get(i).draw();
       i = i + 1;
     }
+    }else{
+      fightScreen.draw();
+  }
   }
   
   public int sizeX() {

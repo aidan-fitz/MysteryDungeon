@@ -5,29 +5,60 @@ public class Creature {
   private int level;
   private color creatureColor;
   private boolean enemy;
+  long nextMovement;
   PImage enemyImage, heroImage; 
-  public Creature(int health, int level, int r, int c, color creatureColor, Dungeon dungeon, boolean enemy) {
+  public Creature(int health, int r, int c, color creatureColor, Dungeon dungeon, boolean enemy) {
     this.r = r;
     this.c = c;
     this.health = health;
-    this.level = level;
     this.creatureColor = creatureColor;
     this.dungeon = dungeon;
     this.enemy = enemy;
     enemyImage = loadImage("enemy.png");
     heroImage = loadImage("hero.png");
+    nextMovement = millis() + 1000;
   }
   public int getHealth() {
     return health;
   }
-  public int getLevel() {
-    return level;
-  }
   public void setHealth(int health) {
     this.health = health;
   }
-  public void setLevel(int level) {
-    this.level = level;
+  public void move(){
+   if (dist(r, c, dungeon.getHero().getR(), dungeon.getHero().getC()) < 10){
+     if (millis() % 10 == 0){
+       if (c > dungeon.getHero().getC()){
+           moveH(-1);
+       }
+       if (c < dungeon.getHero().getC()){
+           moveH(1);
+       }
+       if (r > dungeon.getHero().getR()){
+           moveV(-1);
+       }
+       if (r < dungeon.getHero().getR()){
+           moveV(1);
+     }
+     }
+   }else{
+     if (millis() >= nextMovement){
+        nextMovement = millis() + 1000;
+        Random rand = new Random();
+        int randomNum = rand.nextInt(4);
+        if (randomNum == 0){
+          moveH(-1);
+        }
+        if (randomNum == 1){
+          moveH(1);
+        }
+        if (randomNum == 2){
+          moveV(-1);
+        }
+        if (randomNum == 3){
+          moveV(1);
+        }
+      }
+    }
   }
   public void moveH(int distance){ //negative is left
     c = c + distance;
@@ -45,8 +76,9 @@ public class Creature {
     this.creatureColor = creatureColor;
   }
   public void draw(){
-      imageMode(CORNER);
+    imageMode(CORNER);
     if (enemy){
+      move();
       image(enemyImage, c * 20, r * 20, 20, 20);
     }else{
       image(heroImage, c * 20, r * 20, 20, 20);
