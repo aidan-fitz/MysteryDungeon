@@ -1,12 +1,12 @@
 public class Creature {
   private Dungeon dungeon;
   private int health;
-  private int x,y; //position in the floor map
+  private int r,c; //position in the floor map
   private int level;
   private color creatureColor;
-  public Creature(int health, int level, int x, int y, color creatureColor, Dungeon dungeon) {
-    this.x = x;
-    this.y = y;
+  public Creature(int health, int level, int r, int c, color creatureColor, Dungeon dungeon) {
+    this.r = r;
+    this.c = c;
     this.health = health;
     this.level = level;
     this.creatureColor = creatureColor;
@@ -25,16 +25,16 @@ public class Creature {
     this.level = level;
   }
   public void moveH(int distance){ //negative is left
-    x = x + distance;
+    c = c + distance;
   }
   public void moveV(int distance){ //negative is up
-    y = y + distance;
+    r = r + distance;
   }
-  public int getX(){
-    return x;
+  public int getR(){
+    return r;
   }
-  public int getY(){
-    return y;
+  public int getC(){
+    return c;
   }
   public void setColor(color creatureColor){
     this.creatureColor = creatureColor;
@@ -43,7 +43,7 @@ public class Creature {
     stroke(0);
     fill(creatureColor);
     ellipseMode(CORNER);
-    ellipse(x * 20, y * 20, 20, 20);
+    ellipse(c * 20, r * 20, 20, 20);
   }
 }
 

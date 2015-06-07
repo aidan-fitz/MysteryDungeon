@@ -12,10 +12,12 @@ public class Floor implements Iterable<Floor.Tile> {
 
   private Random rng;
 
+  PImage wallImage; 
+  
   public Floor(List<Creature> team, Random rng) {
     this.rng = rng;
     map = loadLayout();
-    
+    wallImage = loadImage("wall.png");
     println(sizeX() + "," + sizeY());
   }
 
@@ -107,11 +109,16 @@ public class Floor implements Iterable<Floor.Tile> {
       this.x = x;
       this.y = y;
     }
-
-    public char getType() {
+    
+    public char getType(){
       return map[y][x];
     }
-
+    public int getX(){
+      return x;
+    }
+    public int getY(){
+      return y;
+    }
     public boolean canWalk() {
       return getType() != WALL;
     }
@@ -135,12 +142,17 @@ public class Floor implements Iterable<Floor.Tile> {
         return #000000; // black
       }
     }
-
     public void draw() {
+      /* noStroke();
+      imageMode(CORNER);
+      image(wallImage, x * 20, y * 20, 20, 20);
+      */
+      
       rectMode(CORNER);
       noStroke();
       fill(getColor());
       rect(tileSize*x, tileSize*y, tileSize, tileSize);
+    
     }
   }
 

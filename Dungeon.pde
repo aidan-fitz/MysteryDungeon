@@ -22,7 +22,7 @@ public class Dungeon {
     enemies = new ArrayList<Creature>();
     Creature enemy = new Creature(20,10,10,10, color(0,255,0), this);
     enemies.add(enemy);
-    hero = new Hero(20, 1, 20, 20, color(255,0,0), this);
+    hero = new Hero(20, 1, 20, 15, color(255,0,0), this);
   }
 
   public void nextFloor() {
@@ -41,12 +41,12 @@ public class Dungeon {
   }
   
   public void attack(){
-    System.out.println(hero.getX() + " " + hero.getY());
     Creature enemy = null;
     int i = 0;
     while (i < enemies.size()){
         Creature currEnemy = enemies.get(i);
-      if (dist(currEnemy.getX(), currEnemy.getY(), hero.getX(), hero.getY()) <= 1){
+        System.out.println(dist(currEnemy.getR(), currEnemy.getC(), hero.getR(), hero.getC()));
+      if (dist(currEnemy.getR(), currEnemy.getC(), hero.getR(), hero.getC()) <= 2){
            enemy = currEnemy;
            enemy.setColor(color(100,100,100));
          
@@ -57,7 +57,9 @@ public class Dungeon {
 
   public void draw() {
     for (Floor.Tile tile : floor) {
-      tile.draw();
+       if ( 0 <= tile.getX() && tile.getX() < floor.sizeX() && 0 <= tile.getY() && tile.getY() < floor.sizeY()){
+        tile.draw();
+       }
     }
     hero.draw();
     int i = 0;
