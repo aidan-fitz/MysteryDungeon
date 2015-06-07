@@ -7,6 +7,7 @@ public class Creature {
   private boolean enemy;
   long nextMovement;
   PImage enemyImage, heroImage; 
+  
   public Creature(int health, int r, int c, color creatureColor, Dungeon dungeon, boolean enemy) {
     this.r = r;
     this.c = c;
@@ -18,63 +19,100 @@ public class Creature {
     heroImage = loadImage("hero.png");
     nextMovement = millis() + 1000;
   }
+  
   public int getHealth() {
     return health;
   }
+  
   public void setHealth(int health) {
     this.health = health;
   }
+  
   public void move(){
-   if (dist(r, c, dungeon.getHero().getR(), dungeon.getHero().getC()) < 10){
-     if (millis() % 10 == 0){
+   float distance = dist(r, c, dungeon.getHero().getR(), dungeon.getHero().getC());
+   if (distance < 2){
+     //dungeon.setAttacking(true);
+   }
+   if (distance < 10){
+     targetedMove();  
+   }else{
+     randomMove();
+   }
+ }
+ 
+ public void targetedMove(){
+   if (millis() % 10 == 0){
        if (c > dungeon.getHero().getC()){
+         if(dungeon.getFloor().getTile(c - 1, r).canWalk()){
            moveH(-1);
+         }
        }
        if (c < dungeon.getHero().getC()){
+         if(dungeon.getFloor().getTile(c + 1, r).canWalk()){
            moveH(1);
+         }
        }
        if (r > dungeon.getHero().getR()){
+         if(dungeon.getFloor().getTile(c, r - 1).canWalk()){
            moveV(-1);
+         }
        }
        if (r < dungeon.getHero().getR()){
+         if(dungeon.getFloor().getTile(c, r + 1).canWalk()){
            moveV(1);
+         }
      }
-     }
-   }else{
-     if (millis() >= nextMovement){
+   }
+ }
+ 
+  public void randomMove(){
+    if (millis() >= nextMovement){
         nextMovement = millis() + 1000;
         Random rand = new Random();
         int randomNum = rand.nextInt(4);
         if (randomNum == 0){
-          moveH(-1);
+         if(dungeon.getFloor().getTile(c - 1, r).canWalk()){
+           moveH(-1);
+         }
         }
         if (randomNum == 1){
-          moveH(1);
+         if(dungeon.getFloor().getTile(c + 1, r).canWalk()){
+           moveH(1);
+         }
         }
         if (randomNum == 2){
-          moveV(-1);
+          if(dungeon.getFloor().getTile(c, r - 1).canWalk()){
+           moveV(-1);
+         }
         }
         if (randomNum == 3){
-          moveV(1);
-        }
-      }
+          if(dungeon.getFloor().getTile(c, r + 1).canWalk()){
+           moveV(1);
+         }
+       }
     }
   }
+  
   public void moveH(int distance){ //negative is left
     c = c + distance;
   }
+  
   public void moveV(int distance){ //negative is up
     r = r + distance;
   }
+  
   public int getR(){
     return r;
   }
+  
   public int getC(){
     return c;
   }
+  
   public void setColor(color creatureColor){
     this.creatureColor = creatureColor;
   }
+  
   public void draw(){
     imageMode(CORNER);
     if (enemy){
