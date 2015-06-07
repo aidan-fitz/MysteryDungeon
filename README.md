@@ -48,3 +48,5 @@ Log:
 - **2015-06-3** Ethan merged Aidan's fix for the room generation.
 - **2015-06-4** Ethan added code so that the hero doesn't go through walls.  It didn't work because the coordinates were messed up (the hero was shifted over by one) so he will continue to work on that in class tomorrow.
 - **2015-06-5** Ethan changed the hero to work with x,y instead of r,c. 
+- **2015-06-7** Ethan merged Aidan's code so now maps are not randomly generated.  Movement restrictions added to all directions.
+-
