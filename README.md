@@ -34,6 +34,7 @@ Inspired by: http://bulbapedia.bulbagarden.net/wiki/Mystery_Dungeon_game_mechani
 
 **Playable Versions**
 **Week 1:** commit cc731e448f47bc00167962351ee919d12f104a05
+**Week 2:** commit 339330fed423288dd468839dc35f39243a0f8e51
 
 Log:
 - **2015-05-26** Removed references to parteners in the decription.  We are no longer planning to implement this feature because we already have enough work as it is.
@@ -50,3 +51,4 @@ Log:
 - **2015-06-5** Ethan changed the hero to work with x,y instead of r,c. 
 - **2015-06-6** Ethan merged Aidan's code so now maps are not randomly generated.  Movement restrictions added to all directions.
 - **2015-06-7** Ethan textured all characters and tiles, added random and targeted enemy movement, added attack screen (combat not implemented yet), and fired all bugs in movement.
+
