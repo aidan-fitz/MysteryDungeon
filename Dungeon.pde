@@ -26,7 +26,8 @@ public class Dungeon {
     floor = new Floor(enemies, rng);
     enemies = new ArrayList<Creature>();
     Creature enemy = new Creature(20,10,27, color(0,255,0), this, true);
-    enemies.add(enemy);
+    Creature enemyTwo = new Creature(5,5,27, color(0,255,0), this, true);
+    enemies.add(enemyTwo);
     hero = new Hero(20, 32, 10, color(255,0,0), this, false);
     attacking = false;
   }
@@ -77,7 +78,7 @@ public class Dungeon {
       enemies.get(i).draw();
       i = i + 1;
     }
-    }else{
+    }else{ 
       fightScreen.draw();
   }
   }

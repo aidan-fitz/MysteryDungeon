@@ -30,8 +30,8 @@ public class Creature {
   
   public void move(){
    float distance = dist(r, c, dungeon.getHero().getR(), dungeon.getHero().getC());
-   if (distance < 2){
-     //dungeon.setAttacking(true);
+   if (distance < 1){
+     dungeon.setAttacking(true);
    }
    if (distance < 10){
      targetedMove();  
