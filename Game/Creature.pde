@@ -1,16 +1,16 @@
 public class Creature {
   private Dungeon dungeon;
   private int health;
-  private int r,c; //position in the floor map
+  private int x,y; //position in the floor map
   private int level;
   private color creatureColor;
   private boolean enemy;
   long nextMovement;
   PImage enemyImage, heroImage; 
   
-  public Creature(int health, int r, int c, color creatureColor, Dungeon dungeon, boolean enemy) {
-    this.r = r;
-    this.c = c;
+  public Creature(int health, int x, int y, color creatureColor, Dungeon dungeon, boolean enemy) {
+    this.x = x;
+    this.y = y;
     this.health = health;
     this.creatureColor = creatureColor;
     this.dungeon = dungeon;

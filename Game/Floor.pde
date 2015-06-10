@@ -85,12 +85,20 @@ public class Floor implements Iterable<Floor.Tile> {
   // makeEnemies() and makeTraps() can be safely left blank
 
   private void makeStairs() {
+    Tile s = randomFloorTile();
+    s.setType(STAIRS);
   }
 
   private void placeTeam() {
+    Tile s = randomFloorTile();
   }
 
   private void makeEnemies() {
+    for (int i = 0; i < 4; i++) {
+      // TODO make sure creatures don't coincide
+      Tile s = randomFloorTile();
+      Creature newEnemy = new Creature(10, s.getX(), s.getY(), #ff0000, null, true);
+    }
   }
 
   private void makeTraps() {
@@ -107,7 +115,7 @@ public Tile randomTile() {
 }
 
 public Tile randomFloorTile() {
-  Tile t;
+  Tile t = null;
   while (t != null && t.getType() != OPEN) {
     t = randomTile();
   }
@@ -125,6 +133,9 @@ public Tile randomFloorTile() {
     
     public char getType(){
       return map[y][x];
+    }
+    public void setType(char type) {
+      map[y][x] = type;
     }
     public int getX(){
       return x;
