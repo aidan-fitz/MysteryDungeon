@@ -98,9 +98,21 @@ public class Floor implements Iterable<Floor.Tile> {
 
   // end of maze setup functions
 
-    public Tile get(int row, int col) {
+  public Tile get(int row, int col) {
     return new Tile(row, col);
   }
+
+public Tile randomTile() {
+  return new Tile(rng.nextInt(sizeX()), rng.nextInt(sizeY()));
+}
+
+public Tile randomFloorTile() {
+  Tile t;
+  while (t != null && t.getType() != OPEN) {
+    t = randomTile();
+  }
+  return t;
+}
 
   public class Tile {
 
