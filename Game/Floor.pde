@@ -8,7 +8,7 @@ public class Floor implements Iterable<Floor.Tile> {
 
   private char[][] map;
 
-  private List<Creature> enemies;
+  private List<Creature> creatures;
 
   private Random rng;
 
@@ -20,11 +20,14 @@ public class Floor implements Iterable<Floor.Tile> {
     wallImage = loadImage("wall.png");
     groundImage = loadImage("ground.png");
     println(sizeX() + "," + sizeY());
+    // Shallow copy
+    creatures = new LinkedList<Creature>(team);
   }
 
   public Tile getTile(int x, int y) {
     return new Tile(x, y);
   }
+
   /**
    * Determines placement of wall (X) and floor tiles (SPACE).
    * Floor tiles are arranged in rectangular, non-overlapping rooms
@@ -89,15 +92,18 @@ public class Floor implements Iterable<Floor.Tile> {
     s.setType(STAIRS);
   }
 
-  private void placeTeam() {
-    Tile s = randomFloorTile();
+  private List<Creature> placeTeam() {
+    for (Creature c: 
+    Tile s = randomWalkableTile();
+    
   }
 
   private void makeEnemies() {
     for (int i = 0; i < 4; i++) {
       // TODO make sure creatures don't coincide
-      Tile s = randomFloorTile();
+      Tile s = randomWalkableTile();
       Creature newEnemy = new Creature(10, s.getX(), s.getY(), #ff0000, null, true);
+      creatures.add(newEnemy);
     }
   }
 
@@ -116,7 +122,19 @@ public class Floor implements Iterable<Floor.Tile> {
 
   public Tile randomFloorTile() {
     Tile t = null;
-    while (t != null && t.getType () != OPEN) {
+    while (t == null || t.getType () != OPEN) {
+      t = randomTile();
+    }
+    return t;
+  }
+
+  /**
+   * Different from randomFloorTile(): Can be water etc. and won't have a
+   * Creature on it
+   */
+  public Tile randomWalkableTile(boolean floorOnly, boolean neighborsWalkable) {
+    Tile t = null;
+    while (t == null || floorOnly ? (t.getType() != OPEN) : !t.canWalk()) {
       t = randomTile();
     }
     return t;
@@ -134,17 +152,59 @@ public class Floor implements Iterable<Floor.Tile> {
     public char getType() {
       return map[y][x];
     }
+
     public void setType(char type) {
       map[y][x] = type;
     }
+
     public int getX() {
       return x;
     }
+
     public int getY() {
       return y;
     }
+
+    public boolean exists() {
+      return 0 <= x && x < sizeX() && 0 <= y && y < sizeY();
+    }
+
     public boolean canWalk() {
-      return getType() != WALL;
+      return getType() != WALL && !isOccupied();
+    }
+
+    public List<Tile> getNeighbors() {
+      List neighbors = new LinkedList<Tile>();
+      for (int dx = -1; dx <= 1; dx++) {
+        for (int dy = -1; dy <= 1; dy++) {
+	  if (dx != 0 || dy != 0) {
+	    Tile t = new Tile(x + dx, y + dy);
+	    if (t.exists()) {
+	      neighbors.add(t);
+	    }
+	  }
+	}
+      }
+      return neighbors;
+    }
+
+    public int numWalkableNeighbors() {
+      int n = 0;
+      for (Tile t: getNeighbors()) {
+        if (t.canWalk()) {
+	  n++;
+	}
+      }
+      return n;
+    }
+
+    public boolean isOccupied() {
+      for (Creature c: creatures) {
+        if (x == c.getX() && y == c.getY()) {
+	  return true;
+	}
+      }
+      return false;
     }
 
     public color getColor() {
@@ -166,23 +226,27 @@ public class Floor implements Iterable<Floor.Tile> {
         return #000000; // black
       }
     }
+
     public void draw() {
       noStroke();
-      if (getType() == OPEN) {
+      switch (getType()) {
+      case OPEN:
         imageMode(CORNER);
-        image(groundImage, x * 20, y * 20, 20, 20);
-      } else {
-        if (getType() == WALL) {
-          imageMode(CORNER);
-          image(wallImage, x * 20, y * 20, 20, 20);
-        } else {
-          rectMode(CORNER);
-          fill(getColor());
-          rect(tileSize*x, tileSize*y, tileSize, tileSize);
-        }
+        image(groundImage, x * tileSize, y * tileSize, tileSize, tileSize);
+	return;
+      case WALL:
+        imageMode(CORNER);
+        image(wallImage, x * tileSize, y * tileSize, tileSize, tileSize);
+	return;
+      default:
+        rectMode(CORNER);
+        fill(getColor());
+        rect(tileSize*x, tileSize*y, tileSize, tileSize);
       }
     }
+
   }
+
   public Iterator<Tile> iterator() {
     return new Iterator<Tile>() {
       private int x = 0, y = 0;
