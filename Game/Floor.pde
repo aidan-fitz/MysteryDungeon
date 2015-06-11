@@ -13,7 +13,7 @@ public class Floor implements Iterable<Floor.Tile> {
   private Random rng;
 
   PImage wallImage, groundImage; 
-  
+
   public Floor(List<Creature> team, Random rng) {
     this.rng = rng;
     map = loadLayout();
@@ -22,10 +22,10 @@ public class Floor implements Iterable<Floor.Tile> {
     println(sizeX() + "," + sizeY());
   }
 
-   public Tile getTile(int x, int y){
-      return new Tile(x, y);
-   }
-    /**
+  public Tile getTile(int x, int y) {
+    return new Tile(x, y);
+  }
+  /**
    * Determines placement of wall (X) and floor tiles (SPACE).
    * Floor tiles are arranged in rectangular, non-overlapping rooms
    * connected by one-tile-wide corridors.
@@ -106,21 +106,21 @@ public class Floor implements Iterable<Floor.Tile> {
 
   // end of maze setup functions
 
-  public Tile get(int row, int col) {
+    public Tile get(int row, int col) {
     return new Tile(row, col);
   }
 
-public Tile randomTile() {
-  return new Tile(rng.nextInt(sizeX()), rng.nextInt(sizeY()));
-}
-
-public Tile randomFloorTile() {
-  Tile t = null;
-  while (t != null && t.getType() != OPEN) {
-    t = randomTile();
+  public Tile randomTile() {
+    return new Tile(rng.nextInt(sizeX()), rng.nextInt(sizeY()));
   }
-  return t;
-}
+
+  public Tile randomFloorTile() {
+    Tile t = null;
+    while (t != null && t.getType () != OPEN) {
+      t = randomTile();
+    }
+    return t;
+  }
 
   public class Tile {
 
@@ -130,17 +130,17 @@ public Tile randomFloorTile() {
       this.x = x;
       this.y = y;
     }
-    
-    public char getType(){
+
+    public char getType() {
       return map[y][x];
     }
     public void setType(char type) {
       map[y][x] = type;
     }
-    public int getX(){
+    public int getX() {
       return x;
     }
-    public int getY(){
+    public int getY() {
       return y;
     }
     public boolean canWalk() {
@@ -168,20 +168,19 @@ public Tile randomFloorTile() {
     }
     public void draw() {
       noStroke();
-      if (getType() == OPEN){
+      if (getType() == OPEN) {
         imageMode(CORNER);
         image(groundImage, x * 20, y * 20, 20, 20);
-      }else{
-      if (getType() == WALL){
-        imageMode(CORNER);
-        image(wallImage, x * 20, y * 20, 20, 20);
+      } else {
+        if (getType() == WALL) {
+          imageMode(CORNER);
+          image(wallImage, x * 20, y * 20, 20, 20);
+        } else {
+          rectMode(CORNER);
+          fill(getColor());
+          rect(tileSize*x, tileSize*y, tileSize, tileSize);
+        }
       }
-      else{
-      rectMode(CORNER);
-      fill(getColor());
-      rect(tileSize*x, tileSize*y, tileSize, tileSize);
-      }
-    }
     }
   }
   public Iterator<Tile> iterator() {
@@ -213,6 +212,5 @@ public Tile randomFloorTile() {
     };
   }
 }
-
 
 
