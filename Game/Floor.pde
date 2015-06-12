@@ -92,17 +92,18 @@ public class Floor implements Iterable<Floor.Tile> {
     s.setType(STAIRS);
   }
 
-  private List<Creature> placeTeam() {
-    for (Creature c: 
-    Tile s = randomWalkableTile();
-    
+  private void placeTeam() {
+    for (Creature c: creatures) {
+      Tile s = randomWalkableTile(true);
+      c.setXY(s.getX(), s.getY());
+    }
   }
 
   private void makeEnemies() {
     for (int i = 0; i < 4; i++) {
       // TODO make sure creatures don't coincide
-      Tile s = randomWalkableTile();
-      Creature newEnemy = new Creature(10, s.getX(), s.getY(), #ff0000, null, true);
+      Tile s = randomWalkableTile(true);
+      Creature newEnemy = new Creature(10, s.getX(), s.getY(), null, true);
       creatures.add(newEnemy);
     }
   }
@@ -132,7 +133,7 @@ public class Floor implements Iterable<Floor.Tile> {
    * Different from randomFloorTile(): Can be water etc. and won't have a
    * Creature on it
    */
-  public Tile randomWalkableTile(boolean floorOnly, boolean neighborsWalkable) {
+  public Tile randomWalkableTile(boolean floorOnly) {
     Tile t = null;
     while (t == null || floorOnly ? (t.getType() != OPEN) : !t.canWalk()) {
       t = randomTile();

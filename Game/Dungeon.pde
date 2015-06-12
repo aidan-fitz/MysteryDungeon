@@ -25,8 +25,8 @@ public class Dungeon {
     rng = new Random();
     floor = new Floor(enemies, rng);
     enemies = new ArrayList<Creature>();
-    Creature enemy = new Creature(20,10,27, color(0,255,0), this, true);
-    Creature enemyTwo = new Creature(5,5,27, color(0,255,0), this, true);
+    Creature enemy = new Creature(20,10,27, this, true);
+    Creature enemyTwo = new Creature(5,5,27, this, true);
     enemies.add(enemyTwo);
     hero = new Hero(20, 32, 10, color(255,0,0), this, false);
     attacking = false;
@@ -57,8 +57,8 @@ public class Dungeon {
     int i = 0;
     while (i < enemies.size()){
         Creature currEnemy = enemies.get(i);
-        System.out.println(dist(currEnemy.getR(), currEnemy.getC(), hero.getR(), hero.getC()));
-      if (dist(currEnemy.getR(), currEnemy.getC(), hero.getR(), hero.getC()) < 2){
+        System.out.println(dist(currEnemy.getY(), currEnemy.getX(), hero.getY(), hero.getX()));
+      if (dist(currEnemy.getY(), currEnemy.getX(), hero.getY(), hero.getX()) < 2){
            attacking = true;
       }
       i = i + 1;

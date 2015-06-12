@@ -27,7 +27,7 @@ public class Creature {
   }
 
   public void move() {
-    float distance = dist(r, c, dungeon.getHero().getR(), dungeon.getHero().getC());
+    float distance = dist(x, y, dungeon.getHero().getX(), dungeon.getHero().getY());
     if (distance < 1) {
       dungeon.setAttacking(true);
     }
@@ -40,24 +40,24 @@ public class Creature {
 
   public void targetedMove() {
     if (millis() % 10 == 0) {
-      if (c > dungeon.getHero().getC()) {
-        if (dungeon.getFloor().getTile(c - 1, r).canWalk()) {
-          moveH(-1);
+      if (x > dungeon.getHero().getX()) {
+        if (dungeon.getFloor().getTile(x - 1, y).canWalk()) {
+          moveX(-1);
         }
       }
-      if (c < dungeon.getHero().getC()) {
-        if (dungeon.getFloor().getTile(c + 1, r).canWalk()) {
-          moveH(1);
+      if (x < dungeon.getHero().getX()) {
+        if (dungeon.getFloor().getTile(x + 1, y).canWalk()) {
+          moveX(1);
         }
       }
-      if (r > dungeon.getHero().getR()) {
-        if (dungeon.getFloor().getTile(c, r - 1).canWalk()) {
-          moveV(-1);
+      if (y > dungeon.getHero().getY()) {
+        if (dungeon.getFloor().getTile(x, y - 1).canWalk()) {
+          moveY(-1);
         }
       }
-      if (r < dungeon.getHero().getR()) {
-        if (dungeon.getFloor().getTile(c, r + 1).canWalk()) {
-          moveV(1);
+      if (y < dungeon.getHero().getY()) {
+        if (dungeon.getFloor().getTile(x, y + 1).canWalk()) {
+          moveY(1);
         }
       }
     }
@@ -69,33 +69,33 @@ public class Creature {
       Random rand = new Random();
       int randomNum = rand.nextInt(4);
       if (randomNum == 0) {
-        if (dungeon.getFloor().getTile(c - 1, r).canWalk()) {
-          moveH(-1);
+        if (dungeon.getFloor().getTile(x - 1, y).canWalk()) {
+          moveX(-1);
         }
       }
       if (randomNum == 1) {
-        if (dungeon.getFloor().getTile(c + 1, r).canWalk()) {
-          moveH(1);
+        if (dungeon.getFloor().getTile(x + 1, y).canWalk()) {
+          moveX(1);
         }
       }
       if (randomNum == 2) {
-        if (dungeon.getFloor().getTile(c, r - 1).canWalk()) {
-          moveV(-1);
+        if (dungeon.getFloor().getTile(x, y - 1).canWalk()) {
+          moveY(-1);
         }
       }
       if (randomNum == 3) {
-        if (dungeon.getFloor().getTile(c, r + 1).canWalk()) {
-          moveV(1);
+        if (dungeon.getFloor().getTile(x, y + 1).canWalk()) {
+          moveY(1);
         }
       }
     }
   }
 
-  public void moveH(int distance) { //negative is left
+  public void moveX(int distance) { //negative is left
     x += distance;
   }
 
-  public void moveV(int distance) { //negative is up
+  public void moveY(int distance) { //negative is up
     y += distance;
   }
 
