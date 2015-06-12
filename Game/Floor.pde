@@ -8,20 +8,19 @@ public class Floor implements Iterable<Floor.Tile> {
 
   private char[][] map;
 
-  private List<Creature> creatures;
-
   private Random rng;
 
   PImage wallImage, groundImage; 
 
-  public Floor(List<Creature> team, Random rng) {
+  private Dungeon dungeon;
+  
+  public Floor(Random rng, Dungeon dungeon) {
     this.rng = rng;
+    this.dungeon = dungeon;
     map = loadLayout();
     wallImage = loadImage("wall.png");
     groundImage = loadImage("ground.png");
-    println(sizeX() + "," + sizeY());
-    // Shallow copy
-    creatures = new LinkedList<Creature>(team);
+    makeEnemies();
   }
 
   public Tile getTile(int x, int y) {
@@ -91,20 +90,12 @@ public class Floor implements Iterable<Floor.Tile> {
     Tile s = randomFloorTile();
     s.setType(STAIRS);
   }
-
-  private void placeTeam() {
-    for (Creature c: creatures) {
-      Tile s = randomWalkableTile(true);
-      c.setXY(s.getX(), s.getY());
-    }
-  }
-
   private void makeEnemies() {
     for (int i = 0; i < 4; i++) {
       // TODO make sure creatures don't coincide
-      Tile s = randomWalkableTile(true);
-      Creature newEnemy = new Creature(10, s.getX(), s.getY(), null, true);
-      creatures.add(newEnemy);
+      Tile s = randomFloorTile();
+      Creature newEnemy = new Creature(10, s.getX(), s.getY(), dungeon, true);
+      dungeon.addEnemy(newEnemy);
     }
   }
 
@@ -123,7 +114,7 @@ public class Floor implements Iterable<Floor.Tile> {
 
   public Tile randomFloorTile() {
     Tile t = null;
-    while (t == null || t.getType () != OPEN) {
+    while (t == null || !t.canWalk()) {
       t = randomTile();
     }
     return t;
@@ -135,7 +126,7 @@ public class Floor implements Iterable<Floor.Tile> {
    */
   public Tile randomWalkableTile(boolean floorOnly) {
     Tile t = null;
-    while (t == null || floorOnly ? (t.getType() != OPEN) : !t.canWalk()) {
+    while (t == null || !t.canWalk()) {
       t = randomTile();
     }
     return t;
@@ -200,10 +191,15 @@ public class Floor implements Iterable<Floor.Tile> {
     }
 
     public boolean isOccupied() {
-      for (Creature c: creatures) {
-        if (x == c.getX() && y == c.getY()) {
+      int i = 0;
+      List<Creature> creatures = dungeon.getEnemies();
+      creatures.add(dungeon.getHero());
+      while (i < creatures.size()){
+        Creature creature = creatures.get(i);
+        if (x == creature.getX() && y == creature.getY()) {
 	  return true;
 	}
+        i = i + 1;
       }
       return false;
     }

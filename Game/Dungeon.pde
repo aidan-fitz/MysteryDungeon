@@ -9,6 +9,7 @@ public class Dungeon {
   private Floor floor;
 
   private List<Creature> enemies;
+  
   private Hero hero;
   
   private Random rng;
@@ -23,26 +24,31 @@ public class Dungeon {
     totalFloors = floors;
     currentFloor = 1;
     rng = new Random();
-    floor = new Floor(enemies, rng);
     enemies = new ArrayList<Creature>();
-    Creature enemy = new Creature(20,10,27, this, true);
-    Creature enemyTwo = new Creature(5,5,27, this, true);
-    enemies.add(enemyTwo);
     hero = new Hero(20, 32, 10, color(255,0,0), this, false);
-    attacking = false;
+    floor = new Floor(rng, this);
   }
-
+  public int sizeX() {
+    return floor.sizeX();
+  }
+  
+  public int sizeY() {
+    return floor.sizeY();
+  }
   public void nextFloor() {
     currentFloor++;
     if (currentFloor > totalFloors) {
       // exit the dungeon
     } else {
-	floor = new Floor(enemies, rng);
+	floor = new Floor(rng, this);
     }
   }
   public Hero getHero(){
      return hero;
   }
+  public List getEnemies(){
+    return enemies;
+  } 
   public Floor getFloor(){
       return floor;
   }
@@ -52,7 +58,9 @@ public class Dungeon {
   public void setAttacking(boolean attacking){
     this.attacking = attacking;
   }
-  
+  public void addEnemy(Creature enemy){
+    enemies.add(enemy);
+  }
   public void attack(){
     int i = 0;
     while (i < enemies.size()){
@@ -66,6 +74,7 @@ public class Dungeon {
   }
 
   public void draw() {
+    rect(10,10, 10 ,10 );
     if (!attacking){
     for (Floor.Tile tile : floor) {
        if ( 0 <= tile.getX() && tile.getX() < floor.sizeX() && 0 <= tile.getY() && tile.getY() < floor.sizeY()){
@@ -82,13 +91,6 @@ public class Dungeon {
       fightScreen.draw();
   }
   }
-  
-  public int sizeX() {
-    return floor.sizeX();
-  }
-  
-  public int sizeY() {
-    return floor.sizeY();
-  }
+
 }
 
