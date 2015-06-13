@@ -116,7 +116,7 @@ public class Creature {
     imageMode(CORNER);
     if (enemy) {
       move();
-      image(enemyImage, x * 20, x * 20, 20, 20);
+      image(enemyImage, x * 20, y * 20, 20, 20);
     } else {
       image(heroImage, x * 20, y * 20, 20, 20);
     }
