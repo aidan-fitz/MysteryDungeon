@@ -1,16 +1,19 @@
 import java.util.*;
 
 Dungeon dungeon;
-boolean isUp, isDown, isRight, isLeft, isSpace;
+StartScreen startScreen;
+boolean isUp, isDown, isRight, isLeft, isSpace, playing;
 
 int tileSize = 20;
 
 void setup() {
   size(960, 720);
   dungeon = new Dungeon("Nano Woods", 1);
+  startScreen = new StartScreen(this);
 }
 
 void draw() {
+  if (playing){
   background(255);
   dungeon.getHero().processKeys(isUp, isDown, isRight, isLeft, isSpace);
   dungeon.draw();
@@ -18,6 +21,9 @@ void draw() {
       dungeon.attack();
   }
   dungeon.getHero().setAttemptAttacking(false);
+  } else {
+    startScreen.draw();
+  }
 }
 
 void handleKey(boolean pressed){
@@ -43,7 +49,9 @@ void keyPressed(){
 void keyReleased(){
   handleKey(false);
 }
-
+void setPlaying(Boolean isRunning){
+  playing = isRunning;
+}
 
 // utility methods
 
