@@ -94,7 +94,7 @@ public class Floor implements Iterable<Floor.Tile> {
     for (int i = 0; i < 4; i++) {
       // TODO make sure creatures don't coincide
       Tile s = randomFloorTile();
-      Creature newEnemy = new Creature(10, s.getX(), s.getY(), dungeon, true);
+      Creature newEnemy = new Creature(10, 20, s.getX(), s.getY(), dungeon, true, rng);
       dungeon.addEnemy(newEnemy);
     }
   }
@@ -192,7 +192,7 @@ public class Floor implements Iterable<Floor.Tile> {
 
     public boolean isOccupied() {
       int i = 0;
-      List<Creature> creatures = dungeon.getEnemies();
+      List<Creature> creatures = new ArrayList<Creature>(dungeon.getEnemies());
       creatures.add(dungeon.getHero());
       while (i < creatures.size()){
         Creature creature = creatures.get(i);

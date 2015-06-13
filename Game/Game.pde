@@ -2,6 +2,7 @@ import java.util.*;
 
 Dungeon dungeon;
 StartScreen startScreen;
+FightScreen fightScreen;
 boolean isUp, isDown, isRight, isLeft, isSpace, playing;
 
 int tileSize = 20;
@@ -10,49 +11,57 @@ void setup() {
   size(960, 720);
   dungeon = new Dungeon("Nano Woods", 1);
   startScreen = new StartScreen(this);
+  playing = false;
 }
 
 void draw() {
-  if (playing){
   background(255);
-  dungeon.getHero().processKeys(isUp, isDown, isRight, isLeft, isSpace);
-  dungeon.draw();
-  if (dungeon.getHero().getAttemptAttacking()){
-      dungeon.attack();
-  }
-  dungeon.getHero().setAttemptAttacking(false);
+  if (playing) {
+    if (dungeon.getCreatureInFight() == null) {
+      fightScreen = null;
+      dungeon.getHero().processKeys(isUp, isDown, isRight, isLeft, isSpace);
+      dungeon.draw();
+      if (dungeon.getHero().getAttemptAttacking()) {
+        dungeon.attack();
+      }
+      dungeon.getHero().setAttemptAttacking(false);
+    } else {
+      if (fightScreen == null){
+        fightScreen = new FightScreen(Dungeon);
+      }
+      fightScreen.draw();
+    }
   } else {
     startScreen.draw();
   }
 }
 
-void handleKey(boolean pressed){
+void handleKey(boolean pressed) {
   if (keyCode == 32) {//space
     isSpace = pressed;
   }
   if (keyCode == UP) {
     isUp = pressed;
   }
-  if (keyCode == LEFT){
+  if (keyCode == LEFT) {
     isLeft = pressed;
   }
-  if (keyCode == RIGHT){
+  if (keyCode == RIGHT) {
     isRight = pressed;
   }
-  if (keyCode == DOWN){
+  if (keyCode == DOWN) {
     isDown = pressed;
   }
 }
-void keyPressed(){
+void keyPressed() {
   handleKey(true);
 }
-void keyReleased(){
+void keyReleased() {
   handleKey(false);
 }
-void setPlaying(Boolean isRunning){
-  playing = isRunning;
+void mousePressed() {
+  playing = true;
 }
-
 // utility methods
 
 public static Object oneOf(List l, Random rng) {
