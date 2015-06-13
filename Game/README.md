@@ -51,4 +51,8 @@ Log:
 - **2015-06-5** Ethan changed the hero to work with x,y instead of r,c. 
 - **2015-06-6** Ethan merged Aidan's code so now maps are not randomly generated.  Movement restrictions added to all directions.
 - **2015-06-7** Ethan textured all characters and tiles, added random and targeted enemy movement, added attack screen (combat not implemented yet), and fired all bugs in movement.
+- **2015-06-9** Aidan renamed repo so it works for in-class demos
+- **2015-06-10** Aidan cleaned up the creature class and added a random tile method
+- **2015-06-11** Aidan implemented random generation of creatures but it is buggy
+- **2015-06-12** Ethan fixed Aidan’s changes so now all creatures spawn randomly and added a temporary and crappy start screen.
 
