@@ -35,9 +35,9 @@ public class FightScreen {
     }
     */
     if (millis() < nextStartRound){
-      System.out.println("after attack " + heroEnergyBeingUsed + " " + enemyEnergyBeingUsed + " " + damageDealt + " " + enemyHurt);
+      println("after attack " + heroEnergyBeingUsed + " " + enemyEnergyBeingUsed + " " + damageDealt + " " + enemyHurt);
     } else {
-      System.out.println("waiting for space " + heroEnergyBeingUsed + " / " + dungeon.getHero().getEnergy() + " " + dungeon.getHero().getHealth() + " " + dungeon.getCreatureInFight().getHealth());
+      println("waiting for space " + heroEnergyBeingUsed + " / " + dungeon.getHero().getEnergy() + " " + dungeon.getHero().getHealth() + " " + dungeon.getCreatureInFight().getHealth());
     }
   }
   void executeRound() { //takes the energy of both attacks, computes damage

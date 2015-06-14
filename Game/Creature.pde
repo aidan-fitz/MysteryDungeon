@@ -1,5 +1,5 @@
 public class Creature {
-  private Dungeon dungeon;
+  protected Dungeon dungeon;
   private float health, energy;
   private int x, y; //position in the floor map
   private int level;
@@ -20,6 +20,23 @@ public class Creature {
     heroImage = loadImage("hero.png");
     nextMovement = millis() + 1000;
   }
+
+  public Floor.Tile getTile() {
+    return dungeon.getFloor().getTile(x, y);
+  }
+  public Floor.Tile getTileUp() {
+    return dungeon.getFloor().getTile(x, y-1);
+  }
+  public Floor.Tile getTileDown() {
+    return dungeon.getFloor().getTile(x, y+1);
+  }
+  public Floor.Tile getTileLeft() {
+    return dungeon.getFloor().getTile(x-1, y);
+  }
+  public Floor.Tile getTileRight() {
+    return dungeon.getFloor().getTile(x+1, y);
+  }
+
 
   public float distTo(Creature other) {
     return dist(x, y, other.x, other.y);
