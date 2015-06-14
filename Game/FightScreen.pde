@@ -1,7 +1,10 @@
 public class FightScreen {
   PImage heroDefendingImage, enemyDefendingImage, backgroundImage, heartImage, halfHeartImage, emptyHeartImage;
   int a = 0;
-  long nextMovement;
+  long nextStartRound, nextPressKey;
+  float heroEnergyBeingUsed, enemyEnergyBeingUsed;
+  int damageDealt;
+  boolean enemyHurt;
   public FightScreen(Dungeon dungeon) {
     heroDefendingImage = loadImage("heroDefending.png");
     enemyDefendingImage = loadImage("enemyDefending.png");
@@ -9,11 +12,12 @@ public class FightScreen {
     heartImage = loadImage("heart.png");
     halfHeartImage = loadImage("halfHeart.png");
     emptyHeartImage = loadImage("emptyHeart.png");
-    nextMovement = 1000;
+    nextPressKey = millis();
+    nextStartRound = millis();
   }
 
   public void draw() {
-    //image(backgroundImage,0,0);
+    /*image(backgroundImage,0,0);
     image(heroDefendingImage, 100, 420);
     image(enemyDefendingImage, 500, 400, 233, 300);
     float i = 0;
@@ -28,6 +32,74 @@ public class FightScreen {
         }
       }
       i = i + 1;
+    }
+    */
+    if (millis() < nextStartRound){
+      System.out.println("after attack " + heroEnergyBeingUsed + " " + enemyEnergyBeingUsed + " " + damageDealt + " " + enemyHurt);
+    } else {
+      System.out.println("waiting for space " + heroEnergyBeingUsed + " / " + dungeon.getHero().getEnergy() + " " + dungeon.getHero().getHealth() + " " + dungeon.getCreatureInFight().getHealth());
+    }
+  }
+  void executeRound() { //takes the energy of both attacks, computes damage
+    if (dungeon.getCreatureInFight().getEnergy() < 2.5){
+      enemyEnergyBeingUsed = 0;
+    } else {
+      enemyEnergyBeingUsed = dungeon.getRNG().nextFloat() * (dungeon.getCreatureInFight().getEnergy() - 1) + 1;
+    }
+    if (heroEnergyBeingUsed == 0 && enemyEnergyBeingUsed == 0) {
+      damageDealt = 0;
+    }
+    if (heroEnergyBeingUsed == 0 && enemyEnergyBeingUsed != 0) {
+      damageDealt = 1;
+      enemyHurt = false;
+    }
+    if (heroEnergyBeingUsed != 0 && enemyEnergyBeingUsed == 0) {
+      damageDealt = 1;
+      enemyHurt = true;
+    }
+    if (heroEnergyBeingUsed > enemyEnergyBeingUsed) {
+      damageDealt = 2;
+      enemyHurt = true;
+    } else { 
+      damageDealt = 2;
+      enemyHurt = false;
+    }
+    dungeon.getHero().setEnergy( dungeon.getHero().getEnergy() + dungeon.getHero().getEnergy() / 2);
+    dungeon.getCreatureInFight().setEnergy( dungeon.getCreatureInFight().getEnergy() + dungeon.getCreatureInFight().getEnergy() / 2);
+    if(enemyHurt){
+       dungeon.getCreatureInFight().setHealth(dungeon.getCreatureInFight().getHealth() - damageDealt);
+       if (dungeon.getCreatureInFight().getHealth() <= 0){
+         dungeon.removeEnemy(dungeon.getCreatureInFight());
+         dungeon.setCreatureInFight(null);
+       }
+    } else {
+      dungeon.getHero().setHealth(dungeon.getHero().getHealth() - damageDealt);
+      if (dungeon.getHero().getHealth() <= 0){
+        dungeon.setCreatureInFight(null);
+        dungeon.setHeroDead();
+       }
+    }
+  }
+
+  void processKeys(boolean isUp, boolean isDown, boolean isSpace) {
+    if (millis() >= nextStartRound) {
+      if (millis() >= nextPressKey) {
+        if (isUp) {
+          if (heroEnergyBeingUsed + .1 <= dungeon.getHero().getEnergy()) {
+            heroEnergyBeingUsed = heroEnergyBeingUsed + .1;
+          }
+        }
+        if (isDown) {
+          if (heroEnergyBeingUsed - .1 >= 0) {
+            heroEnergyBeingUsed = heroEnergyBeingUsed - .1;
+          }
+        }  
+        if (isSpace) {
+          executeRound();
+          nextStartRound = millis() + 5000;
+        }
+        nextPressKey = millis() + 100;
+      }
     }
   }
 }

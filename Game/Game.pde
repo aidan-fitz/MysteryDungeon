@@ -25,11 +25,14 @@ void draw() {
         dungeon.attack();
       }
       dungeon.getHero().setAttemptAttacking(false);
-    } else {
+    } else if(dungeon.heroIsAlive()){
       if (fightScreen == null) {
         fightScreen = new FightScreen(dungeon);
       }
+      fightScreen.processKeys(isUp, isDown, isSpace);
       fightScreen.draw();
+    } else {
+      System.out.println("Game Over");
     }
   } else {
     startScreen.draw();

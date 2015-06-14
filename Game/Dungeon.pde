@@ -15,6 +15,8 @@ public class Dungeon {
   private Random rng;
 
   private Creature creatureInFight;
+  
+  private boolean heroAlive;
 
   public Dungeon(String name, int floors) {
     this.name = name;
@@ -22,6 +24,7 @@ public class Dungeon {
     currentFloor = 1;
     rng = new Random();
     creatureInFight = null;
+    heroAlive = true;
     enemies = new ArrayList<Creature>();
     hero = new Hero(20, 10, 32, 10, this, false, rng);
     floor = new Floor(rng, this);
@@ -60,6 +63,18 @@ public class Dungeon {
   }
   public void addEnemy(Creature enemy) {
     enemies.add(enemy);
+  }
+  public void removeEnemy(Creature enemy) {
+    enemies.remove(enemy);
+  }
+  public void setHeroDead(){
+    heroAlive = false;
+  }
+  public boolean heroIsAlive(){
+    return heroAlive;
+  }
+  public Random getRNG(){
+    return rng;
   }
   public void attack() {
     int i = 0;
