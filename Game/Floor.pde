@@ -10,16 +10,18 @@ public class Floor implements Iterable<Floor.Tile> {
 
   private Random rng;
 
-  PImage wallImage, groundImage; 
+  PImage wallImage, groundImage, stairsImage;
 
   private Dungeon dungeon;
-  
+
   public Floor(Random rng, Dungeon dungeon) {
     this.rng = rng;
     this.dungeon = dungeon;
     map = loadLayout();
     wallImage = loadImage("wall.png");
     groundImage = loadImage("ground.png");
+    stairsImage = loadImage("stairs2.png"); // stairs.png is upward staircase - both sprites (c) Pokemon/Nintendo
+    makeStairs();
     makeEnemies();
   }
 
@@ -114,7 +116,7 @@ public class Floor implements Iterable<Floor.Tile> {
 
   public Tile randomFloorTile() {
     Tile t = null;
-    while (t == null || !t.canWalk()) {
+    while (t == null || !t.canWalk ()) {
       t = randomTile();
     }
     return t;
@@ -126,7 +128,7 @@ public class Floor implements Iterable<Floor.Tile> {
    */
   public Tile randomWalkableTile(boolean floorOnly) {
     Tile t = null;
-    while (t == null || !t.canWalk()) {
+    while (t == null || !t.canWalk ()) {
       t = randomTile();
     }
     return t;
@@ -169,23 +171,23 @@ public class Floor implements Iterable<Floor.Tile> {
       List neighbors = new LinkedList<Tile>();
       for (int dx = -1; dx <= 1; dx++) {
         for (int dy = -1; dy <= 1; dy++) {
-	  if (dx != 0 || dy != 0) {
-	    Tile t = new Tile(x + dx, y + dy);
-	    if (t.exists()) {
-	      neighbors.add(t);
-	    }
-	  }
-	}
+          if (dx != 0 || dy != 0) {
+            Tile t = new Tile(x + dx, y + dy);
+            if (t.exists()) {
+              neighbors.add(t);
+            }
+          }
+        }
       }
       return neighbors;
     }
 
     public int numWalkableNeighbors() {
       int n = 0;
-      for (Tile t: getNeighbors()) {
+      for (Tile t : getNeighbors ()) {
         if (t.canWalk()) {
-	  n++;
-	}
+          n++;
+        }
       }
       return n;
     }
@@ -194,11 +196,11 @@ public class Floor implements Iterable<Floor.Tile> {
       int i = 0;
       List<Creature> creatures = new ArrayList<Creature>(dungeon.getEnemies());
       creatures.add(dungeon.getHero());
-      while (i < creatures.size()){
+      while (i < creatures.size ()) {
         Creature creature = creatures.get(i);
         if (x == creature.getX() && y == creature.getY()) {
-	  return true;
-	}
+          return true;
+        }
         i = i + 1;
       }
       return false;
@@ -230,18 +232,21 @@ public class Floor implements Iterable<Floor.Tile> {
       case OPEN:
         imageMode(CORNER);
         image(groundImage, x * tileSize, y * tileSize, tileSize, tileSize);
-	return;
+        return;
       case WALL:
         imageMode(CORNER);
         image(wallImage, x * tileSize, y * tileSize, tileSize, tileSize);
-	return;
+        return;
+      case STAIRS:
+        imageMode(CORNER);
+        image(stairsImage, x * tileSize, y * tileSize, tileSize, tileSize);
+        return;
       default:
         rectMode(CORNER);
         fill(getColor());
         rect(tileSize*x, tileSize*y, tileSize, tileSize);
       }
     }
-
   }
 
   public Iterator<Tile> iterator() {
@@ -273,5 +278,4 @@ public class Floor implements Iterable<Floor.Tile> {
     };
   }
 }
-
 

@@ -23,9 +23,10 @@ public class Dungeon {
     rng = new Random();
     creatureInFight = null;
     enemies = new ArrayList<Creature>();
-    hero = new Hero(20, 10, 32, 10, color(255, 0, 0), this, false, rng);
+    hero = new Hero(20, 10, 32, 10, this, false, rng);
     floor = new Floor(rng, this);
   }
+
   public int sizeX() {
     return floor.sizeX();
   }
@@ -37,6 +38,7 @@ public class Dungeon {
     currentFloor++;
     if (currentFloor > totalFloors) {
       // exit the dungeon
+      playing = false;
     } else {
       floor = new Floor(rng, this);
     }
@@ -63,8 +65,8 @@ public class Dungeon {
     int i = 0;
     while (i < enemies.size ()) {
       Creature currEnemy = enemies.get(i);
-      System.out.println(dist(currEnemy.getY(), currEnemy.getX(), hero.getY(), hero.getX()));
-      if (dist(currEnemy.getY(), currEnemy.getX(), hero.getY(), hero.getX()) < 2) {
+      System.out.println(hero.distTo(currEnemy));
+      if (hero.distTo(currEnemy) < 2) {
         creatureInFight = currEnemy;
       }
       i = i + 1;
@@ -72,18 +74,23 @@ public class Dungeon {
   }
 
   public void draw() {
-      for (Floor.Tile tile : floor) {
-        if ( 0 <= tile.getX() && tile.getX() < floor.sizeX() && 0 <= tile.getY() && tile.getY() < floor.sizeY()) {
-          tile.draw();
-        }
+    for (Floor.Tile tile : floor) {
+      if ( 0 <= tile.getX() && tile.getX() < floor.sizeX() && 0 <= tile.getY() && tile.getY() < floor.sizeY()) {
+        tile.draw();
       }
-      hero.draw();
-      int i = 0;
-      while (i < enemies.size ()) {
-        enemies.get(i).move();
-        enemies.get(i).draw();
-        i = i + 1;
-      }
+    }
+    hero.draw();
+    int i = 0;
+    while (i < enemies.size ()) {
+      enemies.get(i).move();
+      enemies.get(i).draw();
+      i = i + 1;
+    }
+    // Dungeon name and floor number
+    fill(255);
+    textSize(16);
+    textAlign(LEFT, TOP);
+    text(name + " B" + currentFloor + "F", 10, 10);
   }
 }
 

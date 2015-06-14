@@ -26,7 +26,7 @@ void draw() {
       }
       dungeon.getHero().setAttemptAttacking(false);
     } else {
-      if (fightScreen == null){
+      if (fightScreen == null) {
         fightScreen = new FightScreen(dungeon);
       }
       fightScreen.draw();

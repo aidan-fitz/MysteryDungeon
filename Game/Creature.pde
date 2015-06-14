@@ -21,6 +21,10 @@ public class Creature {
     nextMovement = millis() + 1000;
   }
 
+  public float distTo(Creature other) {
+    return dist(x, y, other.x, other.y);
+  }
+
   public float getHealth() {
     return health;
   }
@@ -28,8 +32,8 @@ public class Creature {
   public void setHealth(float health) {
     this.health = health;
   }
-  
-    public float getEnergy() {
+
+  public float getEnergy() {
     return energy;
   }
 
