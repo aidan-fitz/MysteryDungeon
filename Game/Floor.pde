@@ -10,7 +10,6 @@ public class Floor implements Iterable<Floor.Tile> {
 
   private Random rng;
 
-  PImage wallImage, groundImage, stairsImage;
 
   private Dungeon dungeon;
 
@@ -22,9 +21,6 @@ public class Floor implements Iterable<Floor.Tile> {
       Tile start = randomFloorTile();
       dungeon.getHero().setXY(start.getX(), start.getY());
     }
-    wallImage = loadImage("wall.png");
-    groundImage = loadImage("ground.png");
-    stairsImage = loadImage("stairs2.png"); // stairs.png is upward staircase - both sprites (c) Pokemon/Nintendo
     makeStairs();
     // Temporarily commented out to test stairs functionality
     makeEnemies();
@@ -236,15 +232,15 @@ public class Floor implements Iterable<Floor.Tile> {
       switch (getType()) {
       case OPEN:
         imageMode(CORNER);
-        image(groundImage, x * tileSize, y * tileSize, tileSize, tileSize);
+        image(R.groundImage, x * tileSize, y * tileSize, tileSize, tileSize);
         return;
       case WALL:
         imageMode(CORNER);
-        image(wallImage, x * tileSize, y * tileSize, tileSize, tileSize);
+        image(R.wallImage, x * tileSize, y * tileSize, tileSize, tileSize);
         return;
       case STAIRS:
         imageMode(CORNER);
-        image(stairsImage, x * tileSize, y * tileSize, tileSize, tileSize);
+        image(R.stairsImage, x * tileSize, y * tileSize, tileSize, tileSize);
         return;
       default:
         rectMode(CORNER);

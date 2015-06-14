@@ -1,5 +1,7 @@
 import java.util.*;
 
+SpriteSet R;
+
 Dungeon dungeon;
 StartScreen startScreen;
 FightScreen fightScreen;
@@ -10,6 +12,7 @@ int tileSize = 20;
 
 void setup() {
   size(960, 720);
+  R = new SpriteSet();
   dungeon = new Dungeon("Nano Woods", 5);
   startScreen = new StartScreen(this);
   endScreen = new EndScreen();

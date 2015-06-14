@@ -6,7 +6,6 @@ public class Creature {
   private boolean enemy;
   Random rng;
   long nextMovement;
-  PImage enemyImage, heroImage; 
 
   public Creature(double health, double energy, int x, int y, Dungeon dungeon, boolean enemy, Random rng) {
     this.x = x;
@@ -16,8 +15,6 @@ public class Creature {
     this.enemy = enemy;
     this.rng = rng;
     this.energy = energy;
-    enemyImage = loadImage("enemy.png");
-    heroImage = loadImage("hero.png");
     nextMovement = millis() + 1000;
   }
 
@@ -147,9 +144,9 @@ public class Creature {
   public void draw() {
     imageMode(CORNER);
     if (enemy) {
-      image(enemyImage, x * 20, y * 20, 20, 20);
+      image(R.enemySprite, x * 20, y * 20, 20, 20);
     } else {
-      image(heroImage, x * 20, y * 20, 20, 20);
+      image(R.heroSprite, x * 20, y * 20, 20, 20);
     }
   }
 }

@@ -11,27 +11,24 @@ public class StartScreen {
     startButtonWidth = 100;
     startButtonHeight = 50;
     mouseOverStartButton = false;
-    setup();
-  }
-
-  void setup() {
-    size(960, 720);
   }
 
   void draw() {
+    image(R.backgroundImage,0,0);
     //mousePressed();
-    update(mouseX, mouseY); 
-    textSize(32);
-    fill(0, 102, 153);
-    //text("Mystery Dungeon", startButtonX, startButtonY); 
-    text("Start", startButtonX, startButtonY); 
+    update(mouseX, mouseY);
     if (mouseOverStartButton) {
-      fill(color(51));
+      fill(51);
     } else {
-      fill(color(0));
+      fill(0);
     } 
     stroke(255);
     rect(startButtonX, startButtonY, startButtonWidth, startButtonHeight);
+    textAlign(LEFT, TOP);
+    textSize(32);
+    fill(255);
+    //text("Mystery Dungeon", startButtonX, startButtonY); 
+    text("Start", startButtonX + 15, startButtonY + 7);
   }
 
   void update(int x, int y) {
@@ -51,6 +48,5 @@ public class StartScreen {
     }
   }
 }
-
 
 
