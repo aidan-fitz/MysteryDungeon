@@ -1,6 +1,5 @@
 public class FightScreen {
   PImage heroDefendingImage, enemyDefendingImage, backgroundImage, heartImage, halfHeartImage, emptyHeartImage;
-  int a = 0;
   long nextStartRound, nextPressKey;
   double heroEnergyBeingUsed, enemyEnergyBeingUsed;
   int damageDealt;
@@ -85,18 +84,20 @@ public class FightScreen {
        if (dungeon.getCreatureInFight().getHealth() <= 0){
          dungeon.removeEnemy(dungeon.getCreatureInFight());
          dungeon.setCreatureInFight(null);
+         dungeon.setInCombat(false);
        }
     } else {
       dungeon.getHero().setHealth(dungeon.getHero().getHealth() - damageDealt);
       if (dungeon.getHero().getHealth() <= 0){
         dungeon.setCreatureInFight(null);
         dungeon.setHeroDead();
+        dungeon.setInCombat(false);
        }
     }
 
   }
 
-  void processKeys(boolean isUp, boolean isDown, boolean isSpace) {
+  void processKeys(boolean isUp, boolean isDown, boolean isSpace, boolean isF) {
     if (millis() >= nextStartRound) {
       if (millis() >= nextPressKey) {
         if (isUp) {
@@ -114,6 +115,10 @@ public class FightScreen {
           heroEnergyBeingUsed = 0;
           enemyEnergyBeingUsed = 0;
           nextStartRound = millis() + 5000;
+        }
+        if (isF) {
+          System.out.println("FLEE");
+          dungeon.setInCombat(false);
         }
         nextPressKey = millis() + 100;
       }

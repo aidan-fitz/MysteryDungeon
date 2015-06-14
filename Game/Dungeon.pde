@@ -16,7 +16,7 @@ public class Dungeon {
 
   private Creature creatureInFight;
   
-  private boolean heroAlive;
+  private boolean heroAlive, inCombat;
 
   public Dungeon(String name, int floors) {
     this.name = name;
@@ -25,6 +25,7 @@ public class Dungeon {
     rng = new Random();
     creatureInFight = null;
     heroAlive = true;
+    inCombat = false;
     enemies = new ArrayList<Creature>();
     hero = new Hero(20, 10, 32, 10, this, false, rng);
     floor = new Floor(rng, this);
@@ -42,7 +43,9 @@ public class Dungeon {
     if (currentFloor > totalFloors) {
       // exit the dungeon
       playing = false;
+      won = true;
     } else {
+      enemies = new ArrayList<Creature>();
       floor = new Floor(rng, this);
     }
   }
@@ -76,12 +79,19 @@ public class Dungeon {
   public Random getRNG(){
     return rng;
   }
+  public void setInCombat(boolean newBoolean){
+    inCombat = newBoolean;
+  }
+  public boolean getInCombat(){
+    return inCombat;
+  }
   public void attack() {
     int i = 0;
     while (i < enemies.size ()) {
       Creature currEnemy = enemies.get(i);
       System.out.println(hero.distTo(currEnemy));
       if (hero.distTo(currEnemy) < 2) {
+        inCombat = true;
         creatureInFight = currEnemy;
       }
       i = i + 1;

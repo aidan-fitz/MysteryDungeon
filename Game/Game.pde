@@ -3,21 +3,24 @@ import java.util.*;
 Dungeon dungeon;
 StartScreen startScreen;
 FightScreen fightScreen;
-boolean isUp, isDown, isRight, isLeft, isSpace, playing;
+EndScreen endScreen;
+boolean isUp, isDown, isRight, isLeft, isSpace, isF, playing, won;
 
 int tileSize = 20;
 
 void setup() {
   size(960, 720);
-  dungeon = new Dungeon("Nano Woods", 3);
+  dungeon = new Dungeon("Nano Woods", 5);
   startScreen = new StartScreen(this);
+  endScreen = new EndScreen();
   playing = false;
+  won = false;
 }
 
 void draw() {
   background(255);
   if (playing) {
-    if (dungeon.getCreatureInFight() == null) {
+    if (dungeon.getCreatureInFight() == null || !dungeon.getInCombat()) {
       fightScreen = null;
       dungeon.getHero().processKeys(isUp, isDown, isRight, isLeft, isSpace);
       dungeon.draw();
@@ -29,13 +32,17 @@ void draw() {
       if (fightScreen == null) {
         fightScreen = new FightScreen(dungeon);
       }
-      fightScreen.processKeys(isUp, isDown, isSpace);
+      fightScreen.processKeys(isUp, isDown, isSpace, isF);
       fightScreen.draw();
     } else {
       System.out.println("Game Over");
     }
   } else {
+    if (won){
+    endScreen.draw();
+    } else {
     startScreen.draw();
+    }
   }
 }
 
@@ -54,6 +61,9 @@ void handleKey(boolean pressed) {
   }
   if (keyCode == DOWN) {
     isDown = pressed;
+  }
+  if (keyCode == 70){
+    isF = pressed;
   }
 }
 void keyPressed() {
