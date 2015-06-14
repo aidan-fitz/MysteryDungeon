@@ -12,27 +12,30 @@ public class Hero extends Creature {
     if (millis() >= nextMovement) {
       nextMovement = millis() + 120;
       if (isUp) {
-        if (dungeon.getFloor().getTile(getX(), getY() - 1).canWalk()) {
+        if (getTileUp().canWalk()) {
           moveY(-1);
         }
       }
       if (isDown) {
-        if (dungeon.getFloor().getTile(getX(), getY() + 1).canWalk()) {
+        if (getTileDown().canWalk()) {
           moveY(1);
         }
       }
       if (isLeft) {
-        if (dungeon.getFloor().getTile(getX() - 1, getY()).canWalk()) {
+        if (getTileLeft().canWalk()) {
           moveX(-1);
         }
       }
       if (isRight) {
-        if (dungeon.getFloor().getTile(getX() + 1, getY()).canWalk()) {
+        if (getTileRight().canWalk()) {
           moveX(1);
         }
       }
       if (isSpace) {
         attemptAttacking = true;
+      }
+      if (getTile().getType() == Floor.STAIRS) {
+        dungeon.nextFloor();
       }
     }
   }

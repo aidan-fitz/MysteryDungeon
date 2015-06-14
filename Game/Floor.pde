@@ -18,10 +18,15 @@ public class Floor implements Iterable<Floor.Tile> {
     this.rng = rng;
     this.dungeon = dungeon;
     map = loadLayout();
+    {
+      Tile start = randomFloorTile();
+      dungeon.getHero().setXY(start.getX(), start.getY());
+    }
     wallImage = loadImage("wall.png");
     groundImage = loadImage("ground.png");
     stairsImage = loadImage("stairs2.png"); // stairs.png is upward staircase - both sprites (c) Pokemon/Nintendo
     makeStairs();
+    // Temporarily commented out to test stairs functionality
     makeEnemies();
   }
 
@@ -106,8 +111,8 @@ public class Floor implements Iterable<Floor.Tile> {
 
   // end of maze setup functions
 
-    public Tile get(int row, int col) {
-    return new Tile(row, col);
+    public Tile get(int x, int y) {
+    return new Tile(x, y);
   }
 
   public Tile randomTile() {

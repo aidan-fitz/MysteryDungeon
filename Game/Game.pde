@@ -9,7 +9,7 @@ int tileSize = 20;
 
 void setup() {
   size(960, 720);
-  dungeon = new Dungeon("Nano Woods", 1);
+  dungeon = new Dungeon("Nano Woods", 3);
   startScreen = new StartScreen(this);
   playing = false;
 }

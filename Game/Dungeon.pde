@@ -49,7 +49,7 @@ public class Dungeon {
   public Hero getHero() {
     return hero;
   }
-  public List getEnemies() {
+  public List<Creature> getEnemies() {
     return enemies;
   } 
   public Floor getFloor() {
