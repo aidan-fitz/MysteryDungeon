@@ -1,6 +1,6 @@
 public class Creature {
   private Dungeon dungeon;
-  private int health, energy;
+  private float health, energy;
   private int x, y; //position in the floor map
   private int level;
   private boolean enemy;
@@ -8,7 +8,7 @@ public class Creature {
   long nextMovement;
   PImage enemyImage, heroImage; 
 
-  public Creature(int health, int energy, int x, int y, Dungeon dungeon, boolean enemy, Random rng) {
+  public Creature(float health, float energy, int x, int y, Dungeon dungeon, boolean enemy, Random rng) {
     this.x = x;
     this.y = y;
     this.health = health;
@@ -21,19 +21,19 @@ public class Creature {
     nextMovement = millis() + 1000;
   }
 
-  public int getHealth() {
+  public float getHealth() {
     return health;
   }
 
-  public void setHealth(int health) {
+  public void setHealth(float health) {
     this.health = health;
   }
   
-    public int getEnergy() {
+    public float getEnergy() {
     return energy;
   }
 
-  public void setEnergy(int energy) {
+  public void setEnergy(float energy) {
     this.energy = energy;
   }
 
@@ -41,7 +41,7 @@ public class Creature {
     float distance = dist(x, y, dungeon.getHero().getX(), dungeon.getHero().getY());
     System.out.println(distance);
     if (distance < 2) {
-      dungeon.setAttacking(true);
+      dungeon.setCreatureInFight(this);
     } else {
       if (millis() >= nextMovement) {
         nextMovement = millis() + 1000;

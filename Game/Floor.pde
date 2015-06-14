@@ -94,7 +94,7 @@ public class Floor implements Iterable<Floor.Tile> {
     for (int i = 0; i < 4; i++) {
       // TODO make sure creatures don't coincide
       Tile s = randomFloorTile();
-      Creature newEnemy = new Creature(10, 20, s.getX(), s.getY(), dungeon, true, rng);
+      Creature newEnemy = new Creature(15, rng.nextInt(6) + 5, s.getX(), s.getY(), dungeon, true, rng);
       dungeon.addEnemy(newEnemy);
     }
   }

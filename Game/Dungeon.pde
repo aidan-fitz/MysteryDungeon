@@ -23,7 +23,7 @@ public class Dungeon {
     rng = new Random();
     creatureInFight = null;
     enemies = new ArrayList<Creature>();
-    hero = new Hero(20, 20, 32, 10, color(255, 0, 0), this, false, rng);
+    hero = new Hero(20, 10, 32, 10, color(255, 0, 0), this, false, rng);
     floor = new Floor(rng, this);
   }
   public int sizeX() {
