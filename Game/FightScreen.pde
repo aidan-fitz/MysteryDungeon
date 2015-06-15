@@ -20,6 +20,24 @@ public class FightScreen {
     text("Energy: " + (int)dungeon.getCreatureInFight().getEnergy(), 660, 250);
     if (millis() < nextStartRound) {
       System.out.println("after attack " + heroEnergyBeingUsed + " " + enemyEnergyBeingUsed + " " + damageDealt + " " + enemyHurt);
+      if (damageDealt == 0){
+        text("Both the Hero and the Enemy defended, no one takes damage", 200, 200);
+      } 
+      if (damageDealt == 1 && enemyHurt){
+        text("The Hero attacks with " + (int)lastHeroEnergy + " attack energy, but the enemy defends!", 100, 100);
+        text("Enemy is dealt 1 damage!", 100, 150);
+      }
+       if (damageDealt == 1 && !enemyHurt){
+        text("The Hero defends and the enemy attacks with " + (int)lastEnemyEnergy + " attack energy!", 100, 100);
+        text("Hero is dealt 1 damage!", 100, 150);
+       }
+       if (damageDealt == 2 && enemyHurt){
+        text("The Hero attacks with " + (int)lastHeroEnergy + " attack energy and the enemy attacks with " + (int)lastEnemyEnergy + " attack energy!", 100, 100);
+        text("The Hero overpowers the Enemy and the enemy is dealt 2 damage!",100, 150);
+       } else {
+         text("The Hero attacks with " +(int)lastHeroEnergy + " attack energy and the enemy attacks with " + (int)lastEnemyEnergy + " attack energy!", 100, 100); 
+         text("The Enemy overpowers the Hero and the Hero is dealt 2 damage!", 100, 150);
+       }
     } else {
       System.out.println("waiting for space " + heroEnergyBeingUsed + " / " + dungeon.getHero().getEnergy() + " " + dungeon.getHero().getHealth() + " " + dungeon.getCreatureInFight().getHealth());
       text("Press space to ", 80, 50);
@@ -67,11 +85,11 @@ public class FightScreen {
     if (heroEnergyBeingUsed == 0 && enemyEnergyBeingUsed == 0) {
       damageDealt = 0;
     }
-    if (heroEnergyBeingUsed == 0 && enemyEnergyBeingUsed != 0) {
+    if (heroEnergyBeingUsed < 0.1 && enemyEnergyBeingUsed != 0) {
       damageDealt = 1;
       enemyHurt = false;
     }
-    if (heroEnergyBeingUsed != 0 && enemyEnergyBeingUsed == 0) {
+    if (heroEnergyBeingUsed != 0 && enemyEnergyBeingUsed < 0.1) {
       damageDealt = 1;
       enemyHurt = true;
     }
@@ -81,7 +99,7 @@ public class FightScreen {
     } else { 
       damageDealt = 2;
       enemyHurt = false;
-    };
+    }
   }
   void updateEnergy() {
     if ( dungeon.getHero().getEnergy() + dungeon.getHero().getEnergy() / 2 <= 10) {
