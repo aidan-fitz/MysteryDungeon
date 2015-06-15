@@ -11,42 +11,47 @@ public class FightScreen {
   }
 
   public void draw() {
-    R.bg();
-    image(R.heroDefendingImage, 100, 420);
-    image(R.enemyDefendingImage, 500, 400, 233, 300);
-    drawHearts(dungeon.getCreatureInFight(), 15, false);
-    drawHearts(dungeon.getHero(), 20, true);
-    text("Energy: " + (int)dungeon.getHero().getEnergy(), 150, 250);
-    text("Energy: " + (int)dungeon.getCreatureInFight().getEnergy(), 660, 250);
-    if (millis() < nextStartRound) {
-      System.out.println("after attack " + heroEnergyBeingUsed + " " + enemyEnergyBeingUsed + " " + damageDealt + " " + enemyHurt);
-      if (damageDealt == 0){
-        text("Both the Hero and the Enemy defended, no one takes damage", 200, 200);
-      } 
-      if (damageDealt == 1 && enemyHurt){
-        text("The Hero attacks with " + (int)lastHeroEnergy + " attack energy, but the enemy defends!", 100, 100);
-        text("Enemy is dealt 1 damage!", 100, 150);
-      }
-       if (damageDealt == 1 && !enemyHurt){
-        text("The Hero defends and the enemy attacks with " + (int)lastEnemyEnergy + " attack energy!", 100, 100);
-        text("Hero is dealt 1 damage!", 100, 150);
-       }
-       if (damageDealt == 2 && enemyHurt){
-        text("The Hero attacks with " + (int)lastHeroEnergy + " attack energy and the enemy attacks with " + (int)lastEnemyEnergy + " attack energy!", 100, 100);
-        text("The Hero overpowers the Enemy and the enemy is dealt 2 damage!",100, 150);
-       } else {
-         text("The Hero attacks with " +(int)lastHeroEnergy + " attack energy and the enemy attacks with " + (int)lastEnemyEnergy + " attack energy!", 100, 100); 
-         text("The Enemy overpowers the Hero and the Hero is dealt 2 damage!", 100, 150);
-       }
-    } else {
-      System.out.println("waiting for space " + heroEnergyBeingUsed + " / " + dungeon.getHero().getEnergy() + " " + dungeon.getHero().getHealth() + " " + dungeon.getCreatureInFight().getHealth());
-      text("Press space to ", 80, 50);
-      if (heroEnergyBeingUsed == 0) {
-        text("defend", 200, 50);
+    if (dungeon.heroIsAlive()) {
+      R.bg();
+      image(R.heroDefendingImage, 100, 420);
+      image(R.enemyDefendingImage, 500, 400, 233, 300);
+      drawHearts(dungeon.getCreatureInFight(), 15, false);
+      drawHearts(dungeon.getHero(), 20, true);
+      text("Energy: " + (int)dungeon.getHero().getEnergy(), 150, 250);
+      text("Energy: " + (int)dungeon.getCreatureInFight().getEnergy(), 660, 250);
+      if (millis() < nextStartRound) {
+        System.out.println("after attack " + lastHeroEnergy + " " + lastEnemyEnergy + " " + damageDealt + " " + enemyHurt);
+        if (damageDealt == 0) {
+          text("Both the Hero and the Enemy defended, no one takes damage", 200, 200);
+        } else {
+          if (damageDealt == 1 && enemyHurt) {
+            text("The Hero attacks with " + (int)lastHeroEnergy + " attack energy, but the enemy defends!", 100, 100);
+            text("Enemy is dealt 1 damage!", 100, 150);
+          } else {
+            if (damageDealt == 1 && !enemyHurt) {
+              text("The Hero defends and the enemy attacks with " + (int)lastEnemyEnergy + " attack energy!", 100, 100);
+              text("Hero is dealt 1 damage!", 100, 150);
+            } else {
+              if (damageDealt == 2 && enemyHurt) {
+                text("The Hero attacks with " + (int)lastHeroEnergy + " attack energy and the enemy attacks with " + (int)lastEnemyEnergy + " attack energy!", 100, 100);
+                text("The Hero overpowers the Enemy and the enemy is dealt 2 damage!", 100, 150);
+              } else {
+                text("The Hero attacks with " +(int)lastHeroEnergy + " attack energy and the enemy attacks with " + (int)lastEnemyEnergy + " attack energy!", 100, 100); 
+                text("The Enemy overpowers the Hero and the Hero is dealt 2 damage!", 100, 150);
+              }
+            }
+          }
+        }
       } else {
-        text("attack with " + (int)heroEnergyBeingUsed + " energy", 200, 50);
+        System.out.println("waiting for space " + heroEnergyBeingUsed + " / " + dungeon.getHero().getEnergy() + " " + dungeon.getHero().getHealth() + " " + dungeon.getCreatureInFight().getHealth());
+        text("Press space to ", 80, 50);
+        if (heroEnergyBeingUsed == 0) {
+          text("defend", 200, 50);
+        } else {
+          text("attack with " + (int)heroEnergyBeingUsed + " energy", 200, 50);
+        }
+        text("Press up and down arrows to change attack energy", 50, 100);
       }
-      text("Press up and down arrows to change attack energy", 50, 100);
     }
   }
   void drawHearts(Creature creature, int maxHealth, boolean isHero) {
@@ -81,24 +86,30 @@ public class FightScreen {
       enemyEnergyBeingUsed = 0;
     } else {
       enemyEnergyBeingUsed = dungeon.getRNG().nextDouble() * (dungeon.getCreatureInFight().getEnergy() - 1) + 1;
+      dungeon.getCreatureInFight().setEnergy(dungeon.getCreatureInFight().getEnergy() - enemyEnergyBeingUsed);
     }
     if (heroEnergyBeingUsed == 0 && enemyEnergyBeingUsed == 0) {
       damageDealt = 0;
-    }
-    if (heroEnergyBeingUsed < 0.1 && enemyEnergyBeingUsed != 0) {
-      damageDealt = 1;
-      enemyHurt = false;
-    }
-    if (heroEnergyBeingUsed != 0 && enemyEnergyBeingUsed < 0.1) {
-      damageDealt = 1;
-      enemyHurt = true;
-    }
-    if (heroEnergyBeingUsed > enemyEnergyBeingUsed) {
-      damageDealt = 2;
-      enemyHurt = true;
-    } else { 
-      damageDealt = 2;
-      enemyHurt = false;
+    } else {
+      if (heroEnergyBeingUsed == 0.0 && enemyEnergyBeingUsed != 0) {
+        damageDealt = 1;
+        enemyHurt = false;
+      } else {
+        if (heroEnergyBeingUsed != 0 && enemyEnergyBeingUsed == 0.0) {
+          damageDealt = 1;
+          enemyHurt = true;
+        } else {
+          if (heroEnergyBeingUsed > enemyEnergyBeingUsed) {
+            damageDealt = 2;
+            enemyHurt = true;
+          } else {
+            if (heroEnergyBeingUsed < enemyEnergyBeingUsed) { 
+              damageDealt = 2;
+              enemyHurt = false;
+            }
+          }
+        }
+      }
     }
   }
   void updateEnergy() {

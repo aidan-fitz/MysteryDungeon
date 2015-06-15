@@ -48,7 +48,7 @@ void draw() {
       fightScreen.processKeys(isUp, isDown, isSpace, isF);
       fightScreen.draw();
     } else {
-      System.out.println("Game Over");
+      text("The Hero is dead.  You have lost", 500, 500);
     }
   } else {
     if (won){
