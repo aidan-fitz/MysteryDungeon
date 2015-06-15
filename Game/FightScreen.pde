@@ -16,6 +16,8 @@ public class FightScreen {
     image(R.enemyDefendingImage, 500, 400, 233, 300);
     drawHearts(dungeon.getCreatureInFight(), 15, false);
     drawHearts(dungeon.getHero(), 20, true);
+    text("Energy: " + (int)dungeon.getHero().getEnergy(), 150, 250);
+    text("Energy: " + (int)dungeon.getCreatureInFight().getEnergy(), 660, 250);
     if (millis() < nextStartRound) {
       System.out.println("after attack " + heroEnergyBeingUsed + " " + enemyEnergyBeingUsed + " " + damageDealt + " " + enemyHurt);
     } else {
@@ -79,14 +81,16 @@ public class FightScreen {
     } else { 
       damageDealt = 2;
       enemyHurt = false;
-    }
+    };
+  }
+  void updateEnergy() {
     if ( dungeon.getHero().getEnergy() + dungeon.getHero().getEnergy() / 2 <= 10) {
-      dungeon.getHero().setEnergy( dungeon.getHero().getEnergy() + (10 - dungeon.getHero().getEnergy()) / 2);
+      dungeon.getHero().setEnergy( dungeon.getHero().getEnergy() + (10 - dungeon.getHero().getEnergy()) / 2 - 1);
     } else {
       dungeon.getHero().setEnergy(10);
     }
     if (dungeon.getCreatureInFight().getEnergy() + dungeon.getCreatureInFight().getEnergy() / 2 <= 10) {
-      dungeon.getCreatureInFight().setEnergy( dungeon.getCreatureInFight().getEnergy() + ( 10 - dungeon.getCreatureInFight().getEnergy()) / 2);
+      dungeon.getCreatureInFight().setEnergy( dungeon.getCreatureInFight().getEnergy() + ( 10 - dungeon.getCreatureInFight().getEnergy()) / 2 - 1);
     } else {
       dungeon.getCreatureInFight().setEnergy(10);
     }
@@ -106,7 +110,6 @@ public class FightScreen {
       }
     }
   }
-
   void processKeys(boolean isUp, boolean isDown, boolean isSpace, boolean isF) {
     if (millis() >= nextStartRound) {
       if (millis() >= nextPressKey) {
@@ -124,6 +127,7 @@ public class FightScreen {
           dungeon.getHero().setEnergy(dungeon.getHero().getEnergy() - heroEnergyBeingUsed);
           dungeon.getCreatureInFight().setEnergy(dungeon.getCreatureInFight().getEnergy() - heroEnergyBeingUsed);
           executeRound();
+          updateEnergy();
           lastHeroEnergy = heroEnergyBeingUsed;
           lastEnemyEnergy = enemyEnergyBeingUsed;
           heroEnergyBeingUsed = 0;
