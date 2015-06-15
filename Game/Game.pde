@@ -14,7 +14,7 @@ StartScreen startScreen;
 FightScreen fightScreen;
 EndScreen endScreen;
 
-
+int lastBattleEnded;
 
 boolean isUp, isDown, isRight, isLeft, isSpace, isF, playing, won;
 
@@ -28,6 +28,7 @@ void setup() {
   endScreen = new EndScreen();
   playing = false;
   won = false;
+  R.startTitleTheme();
 }
 
 void draw() {
@@ -41,9 +42,10 @@ void draw() {
         dungeon.attack();
       }
       dungeon.getHero().setAttemptAttacking(false);
-    } else if(dungeon.heroIsAlive()){
+    } else if (dungeon.heroIsAlive()) {
       if (fightScreen == null) {
         fightScreen = new FightScreen(dungeon);
+        R.startBattleTheme();
       }
       fightScreen.processKeys(isUp, isDown, isSpace, isF);
       fightScreen.draw();
@@ -51,10 +53,10 @@ void draw() {
       text("The Hero is dead.  You have lost", 500, 500);
     }
   } else {
-    if (won){
-    endScreen.draw();
+    if (won) {
+      endScreen.draw();
     } else {
-    startScreen.draw();
+      startScreen.draw();
     }
   }
 }
@@ -75,7 +77,7 @@ void handleKey(boolean pressed) {
   if (keyCode == DOWN) {
     isDown = pressed;
   }
-  if (keyCode == 70){
+  if (keyCode == 70) {
     isF = pressed;
   }
 }
@@ -86,7 +88,12 @@ void keyReleased() {
   handleKey(false);
 }
 void mousePressed() {
-  playing = true;
+  if (!playing && startScreen.overRect()) {
+    playing = true;
+    R.startDungeonTheme();
+    // Battle cannot start for 5 seconds after you start playing
+    lastBattleEnded = millis();
+  }
 }
 // utility methods
 

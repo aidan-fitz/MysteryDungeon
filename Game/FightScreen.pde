@@ -51,9 +51,11 @@ public class FightScreen {
           text("attack with " + (int)heroEnergyBeingUsed + " energy", 200, 50);
         }
         text("Press up and down arrows to change attack energy", 50, 100);
+        text("Press F to flee", 50, 120);
       }
     }
   }
+
   void drawHearts(Creature creature, int maxHealth, boolean isHero) {
     float i = 0;
     while (i < maxHealth / 2) {
@@ -81,6 +83,7 @@ public class FightScreen {
       i = i + 1;
     }
   }
+
   void executeRound() { //takes the energy of both attacks, computes damage
     if (dungeon.getCreatureInFight().getEnergy() < 2.5) {
       enemyEnergyBeingUsed = 0;
@@ -112,6 +115,7 @@ public class FightScreen {
       }
     }
   }
+
   void updateEnergy() {
     if ( dungeon.getHero().getEnergy() + dungeon.getHero().getEnergy() / 2 <= 10) {
       dungeon.getHero().setEnergy( dungeon.getHero().getEnergy() + (10 - dungeon.getHero().getEnergy()) / 2 - 1);
@@ -128,17 +132,18 @@ public class FightScreen {
       if (dungeon.getCreatureInFight().getHealth() <= 0) {
         dungeon.removeEnemy(dungeon.getCreatureInFight());
         dungeon.setCreatureInFight(null);
-        dungeon.setInCombat(false);
+        exitBattle();
       }
     } else {
       dungeon.getHero().setHealth(dungeon.getHero().getHealth() - damageDealt);
       if (dungeon.getHero().getHealth() <= 0) {
         dungeon.setCreatureInFight(null);
         dungeon.setHeroDead();
-        dungeon.setInCombat(false);
+        exitBattle();
       }
     }
   }
+
   void processKeys(boolean isUp, boolean isDown, boolean isSpace, boolean isF) {
     if (millis() >= nextStartRound) {
       if (millis() >= nextPressKey) {
@@ -165,11 +170,18 @@ public class FightScreen {
         }
         if (isF) {
           System.out.println("FLEE");
-          dungeon.setInCombat(false);
+          exitBattle();
         }
         nextPressKey = millis() + 100;
       }
     }
+  }
+
+  void exitBattle() {
+    dungeon.setInCombat(false);
+    R.startDungeonTheme();
+    // Battle mode cannot activate again for 5 seconds
+    lastBattleEnded = millis();
   }
 }
 

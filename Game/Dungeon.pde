@@ -58,43 +58,54 @@ public class Dungeon {
   public Floor getFloor() {
     return floor;
   }
+
   public Creature getCreatureInFight() {
     return creatureInFight;
   }
+
   public void setCreatureInFight(Creature creatureInFight) {
     this.creatureInFight = creatureInFight;
   }
+
   public void addEnemy(Creature enemy) {
     enemies.add(enemy);
   }
+
   public void removeEnemy(Creature enemy) {
     enemies.remove(enemy);
   }
+
   public void setHeroDead(){
     heroAlive = false;
   }
+
   public boolean heroIsAlive(){
     return heroAlive;
   }
+
   public Random getRNG(){
     return rng;
   }
+  
   public void setInCombat(boolean newBoolean){
     inCombat = newBoolean;
   }
+  
   public boolean getInCombat(){
     return inCombat;
   }
+  
   public void attack() {
-    int i = 0;
-    while (i < enemies.size ()) {
+    // If not enough time has elapsed since the last battle, no battle
+    if (millis() - lastBattleEnded < 5000)
+      return;
+    for (int i = 0; !inCombat && i < enemies.size(); i++) {
       Creature currEnemy = enemies.get(i);
       System.out.println(hero.distTo(currEnemy));
       if (hero.distTo(currEnemy) < 2) {
         inCombat = true;
         creatureInFight = currEnemy;
       }
-      i = i + 1;
     }
   }
 

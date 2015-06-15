@@ -57,7 +57,6 @@ public class Creature {
 
   public void move() {
     float distance = dist(x, y, dungeon.getHero().getX(), dungeon.getHero().getY());
-    System.out.println(distance);
     if (distance < 2) {
       dungeon.setInCombat(true);
       dungeon.setCreatureInFight(this);

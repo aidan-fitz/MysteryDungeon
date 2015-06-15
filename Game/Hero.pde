@@ -1,6 +1,7 @@
 public class Hero extends Creature {
   long nextMovement;
   boolean attemptAttacking;
+
   public Hero(double health, double energy, int x, int y, Dungeon dungeon, boolean enemy, Random rng) {
     super(health, energy, x, y, dungeon, enemy, rng);
     nextMovement = millis() + 120;
@@ -38,9 +39,11 @@ public class Hero extends Creature {
       }
     }
   }
+
   public boolean getAttemptAttacking() {
     return attemptAttacking;
   }
+
   public void setAttemptAttacking(boolean updated) {
     attemptAttacking = updated;
   }

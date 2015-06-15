@@ -1,42 +1,31 @@
-# MysteryDungeon
+# Darkest Dungeon
 A dungeon crawling game; Aidan and Ethan's final project for APCS 2.
-Final Project Idea
-Dungeon Crawling Game
-Repo: https://github.com/aidan-fitz/MysteryDungeon
 
+See `PROPOSAL.md` for the original project proposal.
 
-Description:
+## Controls
 
-In our game, the user will play as the hero traveling through a series of dungeons to find treasure. The hero will have to go through the maze-like dungeon filled with enemies that the hero will fight through turn-based combat.  The hero can pick up mob drops and loot chests to find supplies and gold, which the user can spend at a shop to buy gear.  Once the hero reaches the end of the dungeon, they will have their toughest challenge yet: defeating the endgame boss.  The hero, now equipped with the boss’ op gear, will be able to take a victory lap back through the maze and kill everything in their path with ease.
+- Title card: click anywhere to start playing.
+- Dungeon mode: arrow keys to move.
+- Battle mode: up/down arrow to adjust power, space to attack/defend, F to flee.
 
-Roadmap of goals:
-Make hero class and code movement
-make an enemy class
-make the maze generator (start with 16x16 mazes and then increase the limit to 128x96)
-random placement of pokemon, items, stair tiles
-world scrolling
-restrict movement to the confines of the maze and implement pathfinding for mobs
-implement sprites to represent the hero and enemies.
-Pokémon parody - use the same set of sprites (Pikachu) and recolor using Processing (multiply to make shades and tints) - also somewhat like Pac-Man where all the enemies look the same
-the bosses are Raichu (modified to look like Satan or something)
-Make a shop where the hero can spend their gold
-make “fog of war” feature where the hero can only see a certain distance in front of them. (Floor class has private variables for enemies, items, tiles; you can only access stuff in your field of view
-Turn based – actions in priority queue (hero 0, enemies 4) – use a min heap
-theme music: http://picosong.com/download/3GL2/
+## Inspirations
 
-Base project:
-A hero goes through a dungeon while fighting enemies. The hero will reach the end of the maze and win or will die trying.
+- Dungeon crawling part: _Pok&#233;mon Mystery Dungeon_
+- Battle mechanics:  _Sorcery!_
+- Title card: some game called _Darkest Dungeon_ because Ethan thought their title card looked cool
 
-Extra touches:
-Monster house
+## Soundtracks
 
-Inspired by: http://bulbapedia.bulbagarden.net/wiki/Mystery_Dungeon_game_mechanics
+- Title theme: "Uptown Funk" by Mark Ronson ft. Bruno Mars (8-bit remix)
+- Dungeon theme: Lavender Town theme
+- Battle theme: Pok&#233;mon RSE battle theme (8-bit remix)
 
-**Playable Versions**
-**Week 1:** commit cc731e448f47bc00167962351ee919d12f104a05
-**Week 2:** commit 339330fed423288dd468839dc35f39243a0f8e51
+## Playable Versions
+- **Week 1:** commit `cc731e448f47bc00167962351ee919d12f104a05`
+- **Week 2:** commit `339330fed423288dd468839dc35f39243a0f8e51`
 
-Log:
+## Log
 - **2015-05-26** Removed references to parteners in the decription.  We are no longer planning to implement this feature because we already have enough work as it is.
 - **2015-05-27** Aidan fixed bugs in `Floor.java`. Running it in a terminal prints a blank map (just wall tiles).
 - **2015-05-29** Aidan converted the repo to work in Processing.
@@ -56,4 +45,4 @@ Log:
 - **2015-06-11** Aidan implemented random generation of creatures but it is buggy
 - **2015-06-12** Ethan fixed Aidan's changes so now all creatures spawn randomly and added a temporary and crappy start screen.
 - **2015-06-13** Aidan cleaned up the code a little, added stairs + text saying what floor you're on.  Ethan added hearts to combat screen and cleaned up code so enemy movement and initiation of combat works correctly.
-- **2015-06-14** Aidan added the multiple floors code (stairs callback) and made the hero put in a random position each time it goes to a new floor. Also brought back the other maps. Also consolidated all the image objects into one class (`SpriteSet`) to use less memory and make access easier.  Ethan added creature combat and it works correctly, fixed all non-combat screens, and did a whole ton of misc. changes to make the game work.
+- **2015-06-14** Aidan added the multiple floors code (stairs callback) and made the hero put in a random position each time it goes to a new floor. Also brought back the other maps. Also consolidated all the image objects into one class (`SpriteSet`) to use less memory and make access easier. Also added soundtracks. Ethan added creature combat and it works correctly, fixed all non-combat screens, and did a whole ton of misc. changes to make the game work. Also added a title and game over image.

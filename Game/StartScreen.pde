@@ -14,7 +14,7 @@ public class StartScreen {
   }
 
   void draw() {
-    image(R.startScreenImage,0,0, 960,720);
+    image(R.startScreenImage, 0, 0, 960, 720);
     //mousePressed();
     update(mouseX, mouseY);
     if (mouseOverStartButton) {
@@ -28,24 +28,21 @@ public class StartScreen {
     textSize(32);
     fill(255); 
     text("Start", startButtonX + 15, startButtonY + 7);
+
+    textSize(14);
+    text("\u00a9 2015 A&E Productions", startButtonX - 35, startButtonY + startButtonHeight + 10);
   }
 
   void update(int x, int y) {
-    if (overRect(startButtonX, startButtonY, startButtonWidth, startButtonHeight)) {
+    if (overRect()) {
       mouseOverStartButton = true;
     } else {
       mouseOverStartButton = false;
     }
   }
 
-  boolean overRect(int x, int y, int width, int height) {
-    if (mouseX >= x && mouseX <= x+width && 
-      mouseY >= y && mouseY <= y+height) {
-      return true;
-    } else {
-      return false;
-    }
+  boolean overRect() {
+    return mouseX >= startButtonX && mouseX <= startButtonX+startButtonWidth
+      && mouseY >= startButtonY && mouseY <= startButtonY+startButtonHeight;
   }
 }
-
-
