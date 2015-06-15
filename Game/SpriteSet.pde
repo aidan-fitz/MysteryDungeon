@@ -4,7 +4,7 @@
  */
 public class SpriteSet {
 
-  public final PImage heroSprite, enemySprite, heroDefendingImage, enemyDefendingImage, backgroundImage, heartImage, halfHeartImage, emptyHeartImage, wallImage, groundImage, stairsImage;
+  public final PImage heroSprite, enemySprite, heroDefendingImage, enemyDefendingImage, backgroundImage, heartImage, halfHeartImage, emptyHeartImage, wallImage, groundImage, stairsImage, gameOverImage, startScreenImage;
 
   public SpriteSet() {
     enemySprite = loadImage("enemy.png");
@@ -18,6 +18,8 @@ public class SpriteSet {
     wallImage = loadImage("wall.png");
     groundImage = loadImage("ground.png");
     stairsImage = loadImage("stairs2.png"); // stairs.png is upward staircase - both sprites (c) Pokemon/Nintendo
+    gameOverImage = loadImage("gameOver.png");
+    startScreenImage = loadImage("startScreen.png");
   }
 }
 

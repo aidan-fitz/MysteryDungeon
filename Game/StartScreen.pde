@@ -6,15 +6,15 @@ public class StartScreen {
 
   public StartScreen(Game game) {
     this.game = game;
-    startButtonX = 100;
-    startButtonY = 100;
+    startButtonX = 150;
+    startButtonY = 335;
     startButtonWidth = 100;
     startButtonHeight = 50;
     mouseOverStartButton = false;
   }
 
   void draw() {
-    image(R.backgroundImage,0,0);
+    image(R.startScreenImage,0,0, 960,720);
     //mousePressed();
     update(mouseX, mouseY);
     if (mouseOverStartButton) {
@@ -26,8 +26,7 @@ public class StartScreen {
     rect(startButtonX, startButtonY, startButtonWidth, startButtonHeight);
     textAlign(LEFT, TOP);
     textSize(32);
-    fill(255);
-    //text("Mystery Dungeon", startButtonX, startButtonY); 
+    fill(255); 
     text("Start", startButtonX + 15, startButtonY + 7);
   }
 

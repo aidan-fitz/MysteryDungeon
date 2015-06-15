@@ -1,7 +1,7 @@
 public class FightScreen {
 
   long nextStartRound, nextPressKey;
-  double heroEnergyBeingUsed, enemyEnergyBeingUsed;
+  double heroEnergyBeingUsed, enemyEnergyBeingUsed, lastHeroEnergy, lastEnemyEnergy;
   int damageDealt;
   boolean enemyHurt;
   
@@ -20,9 +20,9 @@ public class FightScreen {
         image(R.halfHeartImage, 300 + 40 * i, 400, 30, 30);
       } else {
         if (i < dungeon.getHero().getHealth() / 2) {
-          image(R.heartImage, 300 + 40 * i, 400, 30, 30);
+          image(R.heartImage, 100 + 30 * i, 300, 30, 30);
         } else {
-          image(R.emptyHeartImage, 300 + 40 * i, 400, 30, 30);
+          image(R.emptyHeartImage, 100 + 30 * i, 300, 30, 30);
         }
       }
       i = i + 1;
@@ -107,9 +107,11 @@ public class FightScreen {
         }  
         if (isSpace) {
           executeRound();
+          lastHeroEnergy = heroEnergyBeingUsed;
+          lastEnemyEnergy = enemyEnergyBeingUsed;
           heroEnergyBeingUsed = 0;
           enemyEnergyBeingUsed = 0;
-          nextStartRound = millis() + 5000;
+          nextStartRound = millis() + 3000;
         }
         if (isF) {
           System.out.println("FLEE");
