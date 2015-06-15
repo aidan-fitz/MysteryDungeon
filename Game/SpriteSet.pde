@@ -21,5 +21,9 @@ public class SpriteSet {
     gameOverImage = loadImage("gameOver.png");
     startScreenImage = loadImage("startScreen.png");
   }
+  
+  public void bg() {
+    background(backgroundImage);
+  }
 }
 

@@ -1,3 +1,10 @@
+import ddf.minim.spi.*;
+import ddf.minim.signals.*;
+import ddf.minim.*;
+import ddf.minim.analysis.*;
+import ddf.minim.ugens.*;
+import ddf.minim.effects.*;
+
 import java.util.*;
 
 SpriteSet R;
@@ -6,6 +13,9 @@ Dungeon dungeon;
 StartScreen startScreen;
 FightScreen fightScreen;
 EndScreen endScreen;
+
+
+
 boolean isUp, isDown, isRight, isLeft, isSpace, isF, playing, won;
 
 int tileSize = 20;

@@ -6,8 +6,8 @@ public class StartScreen {
 
   public StartScreen(Game game) {
     this.game = game;
-    startButtonX = 150;
-    startButtonY = 335;
+    startButtonX = 160;
+    startButtonY = 385;
     startButtonWidth = 100;
     startButtonHeight = 50;
     mouseOverStartButton = false;
