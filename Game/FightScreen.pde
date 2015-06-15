@@ -131,7 +131,6 @@ public class FightScreen {
       dungeon.getCreatureInFight().setHealth(dungeon.getCreatureInFight().getHealth() - damageDealt);
       if (dungeon.getCreatureInFight().getHealth() <= 0) {
         dungeon.removeEnemy(dungeon.getCreatureInFight());
-        dungeon.setCreatureInFight(null);
         exitBattle();
       }
     } else {
