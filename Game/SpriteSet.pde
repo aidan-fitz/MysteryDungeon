@@ -19,5 +19,9 @@ public class SpriteSet {
     groundImage = loadImage("ground.png");
     stairsImage = loadImage("stairs2.png"); // stairs.png is upward staircase - both sprites (c) Pokemon/Nintendo
   }
+  
+  public void bg() {
+    background(backgroundImage);
+  }
 }
 

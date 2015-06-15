@@ -11,7 +11,7 @@ public class FightScreen {
   }
 
   public void draw() {
-    image(R.backgroundImage,0,0);
+    R.bg();
     image(R.heroDefendingImage, 100, 420);
     image(R.enemyDefendingImage, 500, 400, 233, 300);
     float i = 0;

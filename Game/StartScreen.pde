@@ -2,37 +2,51 @@ public class StartScreen {
 
   Game game;
   boolean mouseOverStartButton;
-  int startButtonX, startButtonY, startButtonWidth, startButtonHeight;
+  int startButtonWidth, startButtonHeight;
 
   public StartScreen(Game game) {
     this.game = game;
-    startButtonX = 100;
-    startButtonY = 100;
     startButtonWidth = 100;
     startButtonHeight = 50;
     mouseOverStartButton = false;
   }
 
   void draw() {
-    image(R.backgroundImage,0,0);
-    //mousePressed();
+    R.bg();
+    textAlign(CENTER, CENTER);
+    drawLogo();
+    drawButton();
+    drawCopyright();
+  }
+  
+  void drawLogo() {
+    fill(255, 192, 0);
+    textSize(72);
+    text("Crazy Dungeon", width/2, height/2 - 100);
+  }
+
+  void drawButton() {
     update(mouseX, mouseY);
     if (mouseOverStartButton) {
-      fill(51);
+      fill(104);
     } else {
       fill(0);
     } 
     stroke(255);
-    rect(startButtonX, startButtonY, startButtonWidth, startButtonHeight);
-    textAlign(LEFT, TOP);
+    rectMode(CENTER);
+    rect(width/2, height/2, startButtonWidth, startButtonHeight);
     textSize(32);
     fill(255);
-    //text("Mystery Dungeon", startButtonX, startButtonY); 
-    text("Start", startButtonX + 15, startButtonY + 7);
+    text("Start", width/2, height/2 - 5);
+  }
+  
+  void drawCopyright() {
+    textSize(14);
+    text("\u00a9 2015 Aidan Fitzgerald and Ethan Ansorge", width/2, height/2 + 40);
   }
 
   void update(int x, int y) {
-    if (overRect(startButtonX, startButtonY, startButtonWidth, startButtonHeight)) {
+    if (overRect(width/2 - startButtonWidth/2, height/2 - startButtonHeight/2, startButtonWidth, startButtonHeight)) {
       mouseOverStartButton = true;
     } else {
       mouseOverStartButton = false;
@@ -48,5 +62,4 @@ public class StartScreen {
     }
   }
 }
-
 
