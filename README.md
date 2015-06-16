@@ -24,7 +24,7 @@ See `PROPOSAL.md` for the original project proposal.
 ## Playable Versions
 - **Week 1:** commit `cc731e448f47bc00167962351ee919d12f104a05`
 - **Week 2:** commit `339330fed423288dd468839dc35f39243a0f8e51`
-- '**Week 3:** commit 'affc127141ef63bc1b05aed9c3a9b5f603be083f'
+- '**Week 3:** commit '1073427719e6757f123e2d7aa6921172c1b8e7c3'
 
 ## Log
 - **2015-05-26** Removed references to parteners in the decription.  We are no longer planning to implement this feature because we already have enough work as it is.
